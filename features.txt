@@ -63,3 +63,21 @@ Features Proposed:
         Create/Edit User Button
     About
         Software Description
+
+Jonas:
+    Watch List
+    New Listings
+    Offers List
+    Orders List
+    Search Bar
+Yolanda:
+    Buy Screen
+    Make Offer Screen
+    Product Creation Screen
+    About Screen
+Erick: 
+    User Login
+    User Creation Screen
+    Database Modeling
+    Front-end Adjusts
+    SQLite Helper/Provider
