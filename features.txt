@@ -46,5 +46,20 @@ Features Proposed:
         Current Price
         New Price
         Make Offer Button
+    Product Creation Screen
+        Back Button
+        Title
+        Image
+        Price
+        Description
+        Create/Edit Product Button
+    User Creation Screen
+        Back Button
+        Name
+        Username
+        Password
+        Latitude
+        Longitude
+        Create/Edit User Button
     About
         Software Description
