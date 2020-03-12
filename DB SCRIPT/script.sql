@@ -1,6 +1,23 @@
 CREATE DATABASE IF NOT EXISTS tapnenjoy;
 
-use tapnenjoy;
+USE tapnenjoy;
+
+/*
+ALTER TABLE users
+DROP INDEX users_username_unique;
+
+DROP INDEX user_watch_product_id_fk ON user_watch;
+DROP INDEX user_watch_user_id_fk ON user_watch;
+DROP INDEX user_orders_product_id_fk ON user_orders;
+DROP INDEX user_orders_seller_id_fk ON user_orders;
+DROP INDEX user_orders_user_id_fk ON user_orders;
+DROP INDEX user_offers_product_id_fk ON user_offers;
+DROP INDEX user_offers_seller_id_fk ON user_offers;
+DROP INDEX user_offers_user_id_fk ON user_offers;
+DROP INDEX products_seller_id_fk ON products;
+DROP INDEX sellers_user_id_fk ON sellers;
+*/
+
 
 DROP TABLE IF EXISTS products;
 CREATE TABLE products (
@@ -8,6 +25,7 @@ CREATE TABLE products (
 	title VARCHAR(100) NOT NULL,
 	price DECIMAL(10, 2) NOT NULL,
 	description VARCHAR(1000) NOT NULL,
+    image BLOB NULL,
 	stock INT NOT NULL,
     seller_id INT NOT NULL,
     creation DATETIME NOT NULL,
@@ -26,6 +44,7 @@ CREATE TABLE users (
     name VARCHAR(50) NOT NULL,
     username VARCHAR(50) NOT NULL,
     password VARCHAR(50) NOT NULL,
+    address VARCHAR(200) NULL, 
     latitude DECIMAL(10, 8) NULL,
     longitude DECIMAL(10, 8) NULL,
     creation DATETIME NOT NULL,
@@ -68,12 +87,6 @@ CREATE TABLE user_offers(
 );
 
 
-/*
-ALTER TABLE users
-DROP INDEX users_username_unique;
-
-DROP INDEX products_seller_id_fk ON products;
-*/
 
 /* USERS TABLE - FK */
 ALTER TABLE users
@@ -128,3 +141,4 @@ ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE user_offers
 ADD FOREIGN KEY user_offers_product_id_fk (product_id) REFERENCES products(product_id)
 ON UPDATE RESTRICT ON DELETE RESTRICT;
+
