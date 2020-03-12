@@ -1,0 +1,50 @@
+Features Proposed:
+    Search Bar (search all items)
+    Lists:
+        Watch List
+            Back Button
+            Search Bar (search in watch list)
+            On Screen (per item):
+                Title
+                Image
+                Price
+                Add to Watch List Button (Heart?)
+                Buy Button
+                Make Offer Button
+        New Listings
+            Back Button
+            Search Bar (search in listings)
+            Filter By Price
+            Filter By Distance
+            Filter By Popularity
+            On Screen (per item):
+                Title
+                Image
+                Price
+                Add to Watch List Button (Heart?)
+                Buy Button
+                Make Offer Button
+        My Orders
+            Back Button
+            On Screen (per item):
+                Title
+                Image
+        Offers
+            Back Button
+            Title
+            Status
+    Buy Screen
+        Back Button
+        Title
+        Image
+        Price
+        Description
+        Confirm Order Button
+    Make Offer Screen
+        Back Button
+        Title
+        Current Price
+        New Price
+        Make Offer Button
+    About
+        Software Description
