@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">TapNEnjoy</string>
+    <string name="lblSignUp">SignUp</string>
+    <string name="lblLogIn">LogIn</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lblUserName">Username</string>
+    <string name="lblPassword">Password</string>
+    <string name="lblPasswordConfirm">Confirm Password</string>
+    <string name="lblSignup">SignUp</string>
+    <string name="lblLogin">Login</string>
+</resources>
