@@ -31,30 +31,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //setContentView(R.layout.nav_drawer_layout);
 
-
-        dl = (DrawerLayout)findViewById(R.id.drawer_layout);
+        dl = findViewById(R.id.drawer_layout);
         dt = new ActionBarDrawerToggle(this,
                 dl,
                 R.string.Open,
                 R.string.Close);
 
-        //dl.setDrawerListener(dt);
-        //dt.syncState();
-
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // set up header ActionBar
         ActionBar actionBar = getSupportActionBar();
 
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_view_headline);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_view_headline_black_24dp);
+        actionBar.setTitle(R.string.app_name);
 
-
-        nv = (NavigationView) findViewById(R.id.navigation_view);
+        // set up drawer elements
+        nv = findViewById(R.id.navigation_view);
 
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -122,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         {
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 }

@@ -2,6 +2,8 @@ package com.project.tapnenjoy;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -37,10 +39,15 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
+
+        // hide tool bar on Login
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+
+/*
         databaseHelper = new DBHelper(getContext());
 
         Button btnLogin = view.findViewById(R.id.btnLogin);
-        Button btnSignup = view.findViewById(R.id.btnSignUp);
+
         txtUsername = view.findViewById(R.id.txtUsername);
         txtPassword = view.findViewById(R.id.txtPassword);
 
@@ -62,8 +69,10 @@ public class LoginFragment extends Fragment {
             }
             }
         });
+*/
 
-        btnSignup.setOnClickListener(new View.OnClickListener() {
+        Button btnSignUp = view.findViewById(R.id.btnSignUp);
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 moveSignup();

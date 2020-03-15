@@ -10,73 +10,99 @@
         android:id="@+id/grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnCount="2"
-        android:rowCount="6">
+        android:background="@drawable/layout"
+        android:backgroundTint="@color/colorPrimaryLight"
+        android:backgroundTintMode="multiply"
+        android:columnCount="1"
+        android:rowCount="8">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_margin="10dp"
-            android:text="@string/lblUserName"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:layout_margin="10dp"
-            android:text="@string/lblPassword"
-            android:textSize="18sp" />
-
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtUsername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/txtPassword"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_row="1"
-            android:layout_column="1"
-            android:ems="10"
-            android:inputType="textPassword" />
+            android:layout_column="0"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:hint="@string/lblUserName">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtAddress"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_row="2"
             android:layout_column="0"
-            android:layout_margin="10dp"
-            android:text="@string/lblPasswordConfirm"
-            android:textSize="18sp" />
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:hint="@string/lblAddress">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/txtPasswordConfirm"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtPassword"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_row="2"
-            android:layout_column="1"
-            android:ems="10"
-            android:inputType="textPassword" />
+            android:layout_row="3"
+            android:layout_column="0"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:hint="@string/lblPassword">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtPasswordConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:hint="@string/lblPasswordConfirm">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="3"
-            android:layout_column="1"
+            android:layout_row="5"
+            android:layout_column="0"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#a72693"
+            android:gravity="center"
+            android:minWidth="220dip"
             android:text="@string/lblSignup" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="6"
+            android:layout_column="0"
+            android:layout_gravity="center"
+            android:backgroundTint="@android:color/darker_gray"
+            android:gravity="center"
+            android:minWidth="150dip"
+            android:text="@string/lblBack" />
 
     </GridLayout>
 
