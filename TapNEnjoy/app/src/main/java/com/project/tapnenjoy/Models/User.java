@@ -18,6 +18,7 @@ public class User {
                 String address,
                 float latitude,
                 float longitude,
+                Boolean isSeller,
                 Boolean status){
         this.Id = Id;
         this.name = name;
@@ -29,7 +30,24 @@ public class User {
         this.status = status;
     }
 
-    public void setUserType(Boolean isSeller){
+    public User(String name,
+                String userName,
+                String password,
+                String address,
+                float latitude,
+                float longitude,
+                Boolean isSeller,
+                Boolean status){
+        this.name = name;
+        this.userName = userName;
+        this.password = password;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.status = status;
+    }
+
+    public void setUserIsSeller(Boolean isSeller){
         this.isSeller = isSeller;
     }
 }

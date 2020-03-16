@@ -14,7 +14,14 @@
     <string name="lblAddress">Address</string>
     <string name="lblPassword">Password</string>
     <string name="lblPasswordConfirm">Confirm Password</string>
-    <string name="lblSignup">SignUp</string>
-    <string name="lblLogin">Login</string>
     <string name="lblBack">Back</string>
+    <string name="lblIsSeller">Is Seller</string>
+    <string name="createUserErrorMessage">Error to Create User</string>
+    <string name="createUserSuccessMessasge">User successfully created</string>
+    <string name="lblOk">Ok</string>
+    <string name="userExistsMessage">Username already exists</string>
+    <string name="lblRequired">Required</string>
+    <string name="passwordsMatchMessage">Passwords do not match</string>
+    <string name="notExistsMessage">Does not exist</string>
+    <string name="incorrectPasswordMessage">Incorrect Password</string>
 </resources>
