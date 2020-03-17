@@ -10,6 +10,10 @@ public class Users {
     public static final String USER_ADDRESS = "address";
     public static final String USER_LATITUDE = "latitude";
     public static final String USER_LONGITUDE = "longitude";
+    public static final String USER_COSLATITUDE = "cos_latitude";
+    public static final String USER_SINLATITUDE = "sin_latitude";
+    public static final String USER_COSLONGITUDE = "cos_longitude";
+    public static final String USER_SINLONGITUDE = "sin_longitude";
     public static final String USER_CREATION = "creation";
     public static final String USER_UPDATION = "updation";
     public static final String USER_STATUS = "status";

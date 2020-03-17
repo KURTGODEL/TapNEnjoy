@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.project.tapnenjoy.DBHelper.DBHelper;
 
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Menu _menu = null;
     private Toolbar toolbar;
     private TextView toolBarTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
                 R.string.Close);
         dl.addDrawerListener(dt);
         dt.syncState();
-
 
         toolBarTitle = findViewById(R.id.toolbar_title);
         toolbar = findViewById(R.id.toolbar);
@@ -93,10 +95,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        displayFragment(LoginFragment.class);
+        if(getIsLogged()){
+            displayFragment(MainAuthenticatedFragment.class);
+        }else{
+            displayFragment(LoginFragment.class);
+        }
     }
 
-    private void displayFragment(Class fragmentClass){
+    public void displayFragment(Class fragmentClass){
         try {
             Fragment fragment = (Fragment) fragmentClass.newInstance();
 
@@ -110,6 +116,16 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void setIsLogged(Boolean isLogged){
+        SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+        sharedPreferences.edit().putBoolean("logged", isLogged).apply();
+    }
+
+    public Boolean getIsLogged(){
+        SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+        return sharedPreferences.getBoolean("logged", false);
     }
 
 

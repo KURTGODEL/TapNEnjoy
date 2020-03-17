@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 
-public class MainAuthenticatedFragment extends Fragment {
+public class MainAuthenticatedFragment extends AuthenticatedFragment {
     public MainAuthenticatedFragment() {
         // Required empty public constructor
     }
@@ -26,6 +26,12 @@ public class MainAuthenticatedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_main_authenticated, container, false);
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+
         MainActivity activity = ((MainActivity)getActivity());
 
         // set up action bar for internal screens
@@ -36,13 +42,7 @@ public class MainAuthenticatedFragment extends Fragment {
         ActionBar actionBar = activity.getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_dehaze_darker_24dp);
 
-
-        // hide soft keyboard
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_authenticated, container, false);
+        return view;
     }
 
 }

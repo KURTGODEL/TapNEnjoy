@@ -37,8 +37,9 @@ public class SignupFragment extends Fragment {
     TextInputLayout txtUsername;
     TextInputLayout txtPassword;
     TextInputLayout txtAddress;
-    SwitchMaterial swichIsSeller;
+    SwitchMaterial switchIsSeller;
     TextInputLayout txtPasswordConfirm;
+    MainActivity mainActivity;
 
     public SignupFragment() {
         // Required empty public constructor
@@ -54,7 +55,7 @@ public class SignupFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
-        MainActivity mainActivity = ((MainActivity)getActivity());
+        mainActivity = ((MainActivity)getActivity());
 
         mainActivity.toogleOptionsMenu(false);
         mainActivity.setToolbarTitle(getString(R.string.lblSignUp));
@@ -73,7 +74,7 @@ public class SignupFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                moveLogin();
+                mainActivity.displayFragment(LoginFragment.class);
             }
         });
 
@@ -84,7 +85,7 @@ public class SignupFragment extends Fragment {
         txtPassword = view.findViewById(R.id.txtPassword);
         txtPasswordConfirm = view.findViewById(R.id.txtPasswordConfirm);
         txtAddress = view.findViewById(R.id.txtAddress);
-        swichIsSeller = view.findViewById(R.id.switchIsSeller);
+        switchIsSeller = view.findViewById(R.id.switchIsSeller);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +94,7 @@ public class SignupFragment extends Fragment {
                 String passwordConfirm = txtPasswordConfirm.getEditText().getText().toString();
                 String username = txtUsername.getEditText().getText().toString();
                 String address = txtAddress.getEditText().getText().toString();
-                Boolean isSeller = swichIsSeller.isSelected();
+                Boolean isSeller = switchIsSeller.isSelected();
 
                 if(username.isEmpty()){
                     txtUsername.setErrorEnabled(true);
@@ -147,7 +148,7 @@ public class SignupFragment extends Fragment {
                                 latLng.second,
                                 isSeller,
                                 true);
-                        user.setUserIsSeller(true);
+                        user.setUserIsSeller(isSeller);
 
                         if(databaseHelper.insertUserData(user)){
                             new MaterialAlertDialogBuilder(getContext())
@@ -156,10 +157,15 @@ public class SignupFragment extends Fragment {
                                     .setPositiveButton(getString(R.string.lblOk), (new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                        moveLogin();
+                                        mainActivity.displayFragment(LoginFragment.class);
                                         }
                                     }))
                                     .show();
+
+                            txtUsername.setErrorEnabled(false);
+                            txtPassword.setErrorEnabled(false);
+                            txtPasswordConfirm.setErrorEnabled(false);
+                            txtAddress.setErrorEnabled(false);
                         }else{
                             Toast.makeText(getContext(), getString(R.string.createUserErrorMessage), Toast.LENGTH_LONG).show();
                         }
@@ -171,16 +177,7 @@ public class SignupFragment extends Fragment {
         return view;
     }
 
-    private void moveLogin(){
-        LoginFragment loginFragment = LoginFragment.newInstance();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        fragmentTransaction.replace(R.id.nav_host_fragment, loginFragment).commit();
-    }
-
-
     public void onBackPressed() {
-        moveLogin();
+        mainActivity.displayFragment(LoginFragment.class);
     }
 }

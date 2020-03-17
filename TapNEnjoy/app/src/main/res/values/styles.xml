@@ -21,4 +21,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="CustomFont" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:textSize">18dp</item>
+    </style>
 </resources>

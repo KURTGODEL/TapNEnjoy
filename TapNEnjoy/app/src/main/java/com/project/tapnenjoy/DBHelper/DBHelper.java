@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.project.tapnenjoy.DBHelper.Constants.*;
@@ -36,6 +37,10 @@ public class DBHelper extends SQLiteOpenHelper {
                         Users.USER_ADDRESS + " TEXT," +
                         Users.USER_LATITUDE + " REAL," +
                         Users.USER_LONGITUDE + " REAL," +
+                        Users.USER_SINLATITUDE + " REAL," +
+                        Users.USER_COSLATITUDE + " REAL," +
+                        Users.USER_SINLONGITUDE + " REAL," +
+                        Users.USER_COSLONGITUDE + " REAL," +
                         Users.USER_CREATION + " TEXT," +
                         Users.USER_STATUS + " INTEGER)");
 
@@ -110,6 +115,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /* User CRUD */
 
+    /**
+     * @param user Model containing system's user data
+     * @return Boolean true if success
+     */
     public boolean insertUserData(User user){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -120,6 +129,10 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(Users.USER_ADDRESS, user.address);
         contentValues.put(Users.USER_LATITUDE, user.latitude);
         contentValues.put(Users.USER_LONGITUDE, user.longitude);
+        contentValues.put(Users.USER_COSLATITUDE, Math.cos(Math.toRadians(user.latitude)));
+        contentValues.put(Users.USER_SINLATITUDE, Math.sin(Math.toRadians(user.latitude)));
+        contentValues.put(Users.USER_COSLONGITUDE, Math.cos(Math.toRadians(user.longitude)));
+        contentValues.put(Users.USER_SINLONGITUDE, Math.sin(Math.toRadians(user.longitude)));
         contentValues.put(Users.USER_STATUS, (user.status ? 1 : 0));
         contentValues.put(Users.USER_CREATION,
                 new SimpleDateFormat("yyyyMMddHHmmssSS").format(new Date()));
@@ -137,6 +150,10 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * @param seller Model containing system's seller data
+     * @return Boolean true if success
+     */
     private boolean insertSellerData(Seller seller){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -152,6 +169,10 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * @param username String containing username to be checked
+     * @return Boolean true if username is in the database
+     */
     public boolean checkUsername(String username){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("SELECT 1 FROM " +
@@ -166,6 +187,11 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * @param username String containing username to be checked
+     * @param password String containing password to be checked
+     * @return Boolean true if user is in the database
+     */
     public boolean checkUsernameAndPassword(String username, String password){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
@@ -181,6 +207,10 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * @param user Model containing system's user data
+     * @return Boolean true if success
+     */
     public boolean updateUserData(User user){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -191,29 +221,62 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(Users.USER_ADDRESS, user.address);
         contentValues.put(Users.USER_LATITUDE, user.latitude);
         contentValues.put(Users.USER_LONGITUDE, user.longitude);
+        contentValues.put(Users.USER_COSLATITUDE, Math.cos(Math.toRadians(user.latitude)));
+        contentValues.put(Users.USER_SINLATITUDE, Math.sin(Math.toRadians(user.latitude)));
+        contentValues.put(Users.USER_COSLONGITUDE, Math.cos(Math.toRadians(user.longitude)));
+        contentValues.put(Users.USER_SINLONGITUDE, Math.sin(Math.toRadians(user.longitude)));
         contentValues.put(Users.USER_STATUS, (user.status ? 1 : 0));
         contentValues.put(Users.USER_UPDATION,
                 new SimpleDateFormat("yyyyMMddHHmmssSS").format(new Date()));
 
-        db.update(Users.TABLE_USER_NAME,
+        long result =
+                db.update(Users.TABLE_USER_NAME,
                 contentValues,
                 Users.USER_ID + " = ?",
                 new String[] { user.Id.toString() });
 
-        return true;
+        if(result == -1){
+            return false;
+        }else{
+            if(user.isSeller){
+                deleteSeller((int)result); // delete if exists
+                return insertSellerData(new Seller((int)result));
+            }
+
+            return true;
+        }
     }
 
-    public Cursor getUsers(){
+    /**
+     * @param offset Integer containing index where the SELECT query should start retrieving rows
+     * @return Cursor containing user rows from the database
+     */
+    public Cursor getUsers(Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + Users.TABLE_USER_NAME, null);
+        Cursor res = db.rawQuery(
+                "SELECT * FROM " + Users.TABLE_USER_NAME + " LIMIT 10 OFFSET " + offset, null);
         return res;
     }
 
-    public Cursor getSellers(){
+    /**
+     * @param offset Integer containing index where the SELECT query should start retrieving rows
+     * @return Cursor containing seller rows from the database
+     */
+    public Cursor getSellers(Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + Sellers.TABLE_SELLER_NAME, null);
+        Cursor res = db.rawQuery(
+                "SELECT * FROM " + Sellers.TABLE_SELLER_NAME + " LIMIT 10 OFFSET " + offset, null);
         return res;
     }
+
+    public Integer deleteSeller(Integer id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(
+                Sellers.TABLE_SELLER_NAME,
+                Sellers.SELLER_USER + " = ?",
+                new String[] { id.toString() });
+    }
+
 
     public Integer deleteUser(Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -226,6 +289,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /* Product CRUD */
 
+    /**
+     * @param product Model containing system's product data
+     * @return Boolean true if success
+     */
     public boolean insertProductData(Product product){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -249,6 +316,10 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * @param product Model containing system's product data
+     * @return Boolean true if success
+     */
     public boolean updateProductData(Product product){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -271,10 +342,103 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Cursor getProducts(){
+    /**
+     * @param orderByPrice True or False for price ordination
+     * @param orderDirection ASC or DESC for price ordination direction
+     * @param offset Integer containing index where the SELECT query should start retrieving rows
+     * @return Cursor containing product rows
+     */
+    public Cursor getProducts(Boolean orderByPrice, String orderDirection, Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + Products.TABLE_PRODUCT_NAME, null);
+        Cursor res = db.rawQuery(
+                "SELECT * FROM " + Products.TABLE_PRODUCT_NAME +
+                    (orderByPrice ?
+                            " ORDER BY " + Products.PRODUCT_PRICE + " " + (orderDirection.isEmpty() ? "ASC" : orderDirection) :
+                            "") +
+                    " LIMIT 10 OFFSET " + offset, null);
+
         return res;
+    }
+
+    /**
+     * @param orderByPrice True or False for price ordination
+     * @param orderDirection ASC or DESC for price ordination direction
+     * @param offset Integer containing index where the SELECT query should start retrieving rows
+     * @return Cursor containing product rows by its popularity
+     */
+    public Cursor getProductsByPopularity(Boolean orderByPrice, String orderDirection, Integer offset){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(
+                "SELECT P.* " +
+                " FROM " + Products.TABLE_PRODUCT_NAME + " P INNER JOIN " + UserOrders.TABLE_USER_ORDER_NAME + " O " +
+                " ON P." + Products.PRODUCT_ID + " = O." + UserOrders.USER_ORDER_PRODUCT  +
+                " AND O." + UserOrders.USER_ORDER_STATUS + " = 1 " +
+                " GROUP BY O." + UserOrders.USER_ORDER_PRODUCT +
+                " ORDER BY COUNT(O." + UserOrders.USER_ORDER_PRODUCT + ") DESC " +
+                (orderByPrice ?
+                    " , P." + Products.PRODUCT_PRICE + " " + (orderDirection.isEmpty() ? "ASC" : orderDirection) :
+                                "") +
+                " LIMIT 10 OFFSET " + offset, null);
+
+        return res;
+    }
+
+    /**
+     * @param orderByPrice True or False for price ordination
+     * @param orderDirection ASC or DESC for price ordination direction
+     * @param offset Integer containing index where the SELECT query should start retrieving rows
+     * @return ArrayList<Product> containing product rows by its distance from seller and customer
+     */
+    public ArrayList<Product> getProductsByDistance(Boolean orderByPrice, String orderDirection, Integer offset){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor res = db.rawQuery(
+            " SELECT P.*, " + formatDistanceQuery() + " as distance " +
+            " FROM " + Products.TABLE_PRODUCT_NAME + " P INNER JOIN " + UserOrders.TABLE_USER_ORDER_NAME + " O " +
+            " ON P." + Products.PRODUCT_ID + " = O." + UserOrders.USER_ORDER_PRODUCT + " " +
+            " AND O." + UserOrders.USER_ORDER_STATUS + " = 1 INNER JOIN " + Users.TABLE_USER_NAME + " U " +
+            " ON U." + Users.USER_ID + " = O." + UserOrders.USER_ORDER_USER + " INNER JOIN " + Users.TABLE_USER_NAME + " S " +
+            " ON S." + Users.USER_ID + " = O." + UserOrders.USER_ORDER_SELLER + " " +
+            " ORDER BY distance ASC " +
+                    (orderByPrice ?
+                    " , P." + Products.PRODUCT_PRICE + " " + (orderDirection.isEmpty() ? "ASC" : orderDirection) :
+                    "") +
+            " LIMIT 10 OFFSET " + offset, null);
+
+
+        ArrayList<Product> products = new ArrayList();
+
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            Product product = new Product(
+                    res.getInt(res.getColumnIndex(Products.PRODUCT_ID)),
+                    res.getString(res.getColumnIndex(Products.PRODUCT_TITLE)),
+                    res.getDouble(res.getColumnIndex(Products.PRODUCT_PRICE)),
+                    res.getString(res.getColumnIndex(Products.PRODUCT_DESCRIPTION)),
+                    res.getBlob(res.getColumnIndex(Products.PRODUCT_IMAGE)),
+                    res.getInt(res.getColumnIndex(Products.PRODUCT_STOCK)),
+                    res.getInt(res.getColumnIndex(Products.PRODUCT_SELLER)),
+                    true,
+                    res.getDouble(res.getColumnIndex("distance"))
+            );
+
+            product.distance = Math.acos(product.distance);
+            product.distance = Math.toDegrees(product.distance);
+            product.distance = product.distance * 60 * 1.1515 * 1.609344; // distance in KM
+
+            products.add(product);
+            res.moveToNext();
+        }
+
+        return products;
+    }
+
+    private static String formatDistanceQuery(){
+        return " U." + Users.USER_SINLATITUDE + " * S." + Users.USER_SINLATITUDE +
+                " + U." + Users.USER_COSLATITUDE + " * S." + Users.USER_COSLATITUDE +
+                " * (S." + Users.USER_COSLONGITUDE + " * U." + Users.USER_COSLONGITUDE +
+                " + S." + Users.USER_SINLONGITUDE + " * U." + Users.USER_SINLONGITUDE + ") ";
     }
 
     public Integer deleteProduct(Integer id){
@@ -288,6 +452,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /* User Order CRUD */
 
+    /**
+     * @param userOrder Model containing system's user order data
+     * @return Boolean true if success
+     */
     public boolean insertUserOrderData(UserOrder userOrder){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -309,6 +477,10 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * @param userId Integer containing user Id for WHERE clause
+     * @return Integer containing number of user orders found
+     */
     public Integer getUserOrdersNumber(Integer userId){
         SQLiteDatabase db = this.getReadableDatabase();
         return (int)DatabaseUtils.queryNumEntries(db,
@@ -318,13 +490,19 @@ public class DBHelper extends SQLiteOpenHelper {
                 new String[] { userId.toString() });
     }
 
-    public Cursor getUserOrders(Integer userId){
+    /**
+     * @param userId Integer containing user Id for WHERE clause
+     * @param offset Integer containing index where the SELECT query should start retrieving rows
+     * @return Cursor containing user orders rows from the database
+     */
+    public Cursor getUserOrders(Integer userId, Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
                 "SELECT * FROM " +
                         UserOrders.TABLE_USER_ORDER_NAME +
                         " WHERE " + UserOrders.USER_ORDER_USER + " = ?" +
-                        " AND " + UserOrders.USER_ORDER_STATUS + " = 1 ",
+                        " AND " + UserOrders.USER_ORDER_STATUS + " = 1 " +
+                        " LIMIT 10 OFFSET " + offset,
                 new String[] { userId.toString() });
         return res;
     }
@@ -332,6 +510,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /* User Watch CRUD */
 
+    /**
+     * @param userWatch Model containing system's user watch data
+     * @return Boolean true if success
+     */
     public boolean insertUserWatchData(UserWatch userWatch){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -351,17 +533,27 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getUserWatchs(Integer userId){
+    /**
+     * @param userId Integer containing user Id for WHERE clause
+     * @param offset Integer containing index where the SELECT query should start retrieving rows
+     * @return Cursor containing user watchs rows from the database
+     */
+    public Cursor getUserWatchs(Integer userId, Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
                 "SELECT * FROM " +
                         UserWatchs.TABLE_USER_WATCH_NAME +
                         " WHERE " + UserWatchs.USER_WATCH_USER + " = ? " +
-                        " AND " + UserWatchs.USER_WATCH_STATUS + " = 1 ",
+                        " AND " + UserWatchs.USER_WATCH_STATUS + " = 1 " +
+                        " LIMIT 10 OFFSET " + offset,
                 new String[] { userId.toString() });
         return res;
     }
 
+    /**
+     * @param userId Integer containing user Id for WHERE clause
+     * @return Integer containing number of user watchs found
+     */
     public Integer getUserWatchsNumber(Integer userId){
         SQLiteDatabase db = this.getReadableDatabase();
         return (int)DatabaseUtils.queryNumEntries(db,
@@ -374,6 +566,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /* User Offer CRUD */
 
+    /**
+     * @param userOffer Model containing system's user offer data
+     * @return Boolean true if success
+     */
     public boolean insertUserOfferData(UserOffer userOffer){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -396,17 +592,27 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getUserOffers(Integer userId){
+    /**
+     * @param userId Integer containing user Id for WHERE clause
+     * @param offset Integer containing index where the SELECT query should start retrieving rows
+     * @return Cursor containing user offers rows from the database
+     */
+    public Cursor getUserOffers(Integer userId, Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
                 "SELECT * FROM " +
                         UserOffers.TABLE_USER_OFFER_NAME +
                         " WHERE " + UserOffers.USER_OFFER_USER + " = ? " +
-                        " AND " + UserOffers.USER_OFFER_STATUS + " = 1 ",
+                        " AND " + UserOffers.USER_OFFER_STATUS + " = 1 " +
+                        " LIMIT 10 OFFSET " + offset,
                 new String[] { userId.toString() });
         return res;
     }
 
+    /**
+     * @param userId Integer containing user Id for WHERE clause
+     * @return Integer containing number of user offers found
+     */
     public Integer getUserOffersNumber(Integer userId){
         SQLiteDatabase db = this.getReadableDatabase();
         return (int)DatabaseUtils.queryNumEntries(db,
