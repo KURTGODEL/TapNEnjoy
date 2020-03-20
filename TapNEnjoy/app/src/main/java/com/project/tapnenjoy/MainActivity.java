@@ -25,11 +25,12 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.project.tapnenjoy.DBHelper.DBHelper;
+import com.project.tapnenjoy.Models.dummy.DummyContent;
 
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     private DrawerLayout dl;
     private NavigationView nv;
@@ -160,6 +161,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.signup_option_item:
                 displayFragment(SignupFragment.class);
                 break;
+            case R.id.home_option_item:
+                displayFragment(MainAuthenticatedFragment.class);
+                break;
         }
 
         if (dt.onOptionsItemSelected(item))
@@ -213,4 +217,5 @@ public class MainActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
 }
