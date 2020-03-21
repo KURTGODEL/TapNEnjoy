@@ -2,6 +2,8 @@ package com.project.tapnenjoy;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Bundle;
 
@@ -22,6 +24,9 @@ import android.widget.Toast;
 
 import com.project.tapnenjoy.DBHelper.Constants.Products;
 import com.project.tapnenjoy.DBHelper.DBHelper;
+import com.project.tapnenjoy.Models.Product;
+
+import java.util.ArrayList;
 
 public class MyOrdersFragment extends Fragment{
 
@@ -59,58 +64,71 @@ public class MyOrdersFragment extends Fragment{
                 R.id.txtPrice
         };
 
-        dataAdapter = new SimpleCursorAdapter(
-                getContext(),
-                R.layout.row_myorders_listview,
-                cursor,
-                columns,
-                to,
-                0);
+        //dataAdapter = new SimpleCursorAdapter( getContext(), R.layout.row_myorders_listview, cursor, columns, to, 0);
 
-        myOrdersListView.setAdapter(dataAdapter);
+        ArrayList<Product> products = new ArrayList<>();
+
+        while(cursor.moveToNext()) {
+            products.add(new Product(
+                    cursor.getInt(cursor.getColumnIndex("_id")),
+                    cursor.getString(cursor.getColumnIndex("title")),
+                    cursor.getDouble(cursor.getColumnIndex("price")),
+                    cursor.getString(cursor.getColumnIndex("description")),
+                    cursor.getBlob(cursor.getColumnIndex("image")),
+                    cursor.getInt(cursor.getColumnIndex("stock")),
+                    cursor.getInt(cursor.getColumnIndex("seller_id")),
+                    cursor.getInt(cursor.getColumnIndex("status")) > 0));
+        }
+        cursor.close();
+
+        MyAdapter adapter = new MyAdapter(view.getContext(), R.layout.row_myorders_listview, products);
+
+        myOrdersListView.setAdapter(adapter);
 
         myOrdersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getContext(), "Item " + i + l +" clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Item clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
         return view;
     }
 
-    class MyAdapter extends ArrayAdapter<String>{
+    class MyAdapter extends ArrayAdapter<Product>{
 
         Context context;
-        String rProduct[];
-        String rPrice[];
-        int rImage[];
+        ArrayList<Product> products;
+        Integer resource;
 
-
-        MyAdapter (Context c, String product[], String price[], int images[]){
-            super(c, R.layout.row_myorders_listview, R.id.txtProduct, product);
+        MyAdapter (Context c, Integer resource, ArrayList<Product> product){
+            super(c, resource, product);
+            this.products = product;
             this.context = c;
-            this.rProduct = product;
-            this.rPrice = price;
-            this.rImage = images;
+            this.resource = resource;
         }
 
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            LayoutInflater inflater = (LayoutInflater)MyOrdersFragment.this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            if (convertView==null){
+                LayoutInflater inflater = (LayoutInflater)MyOrdersFragment.this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.row_myorders_listview,null,true);
+            }
 
-            View row = inflater.inflate(R.layout.row_myorders_listview, parent, false);
+            Product product = getItem(position);
 
-            ImageView images = row.findViewById(R.id.imageProduct);
-            TextView product = row.findViewById(R.id.txtProduct);
-            TextView price = row.findViewById(R.id.txtPrice);
+            ImageView image = convertView.findViewById(R.id.imageProduct);
+            TextView tvProduct = convertView.findViewById(R.id.txtProduct);
+            TextView tvPrice = convertView.findViewById(R.id.txtPrice);
 
-            images.setImageResource(rImage[position]);
-            product.setText(rProduct[position]);
-            price.setText(rPrice[position]);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(product.getImage(), 0, product.getImage().length);
 
-            return row;
+            image.setImageBitmap(bitmap);
+            tvProduct.setText(product.getTitle());
+            tvPrice.setText(product.getTitle());
+
+            return convertView;
         }
     }
 
