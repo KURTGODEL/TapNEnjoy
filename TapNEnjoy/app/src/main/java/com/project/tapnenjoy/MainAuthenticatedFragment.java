@@ -8,23 +8,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
-
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import com.project.tapnenjoy.DBHelper.DBHelper;
 import com.project.tapnenjoy.Models.Product;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 
 
 public class MainAuthenticatedFragment extends AuthenticatedFragment {
@@ -64,6 +54,7 @@ public class MainAuthenticatedFragment extends AuthenticatedFragment {
 
         btnMyOrders = view.findViewById(R.id.btnMyOrders);
         btnMyOffers = view.findViewById(R.id.btnMyOffers);
+        btnStartShopping = view.findViewById(R.id.btnStartShopping);
 
         btnMyOrders.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,10 +69,17 @@ public class MainAuthenticatedFragment extends AuthenticatedFragment {
                 DBHelper db = new DBHelper(view.getContext());
 
                 try {
-                    FileInputStream fis = new FileInputStream("/storage/self/primary/Pictures/Jonas.jpg");
+                    FileInputStream fis = new FileInputStream("/storage/self/primary/Pictures/dante.jpg");
                     byte[] bytes = new byte[fis.available()];
                     fis.read(bytes);
-                    Product product = new Product(null, "Mouse", 1.00, "Brand new mouse", bytes, 1, 1, true);
+                    Product product = new Product(null,
+                            "Dante Button Closure Journal",
+                            11.62,
+                            "The perfect traveling journal. From personal writing to jotting notes during conference meetings, satisfy all your note-taking needs with this custom journal.",
+                            bytes,
+                            19,
+                            9,
+                            true);
 
                     Boolean isInserted =  db.insertProductData(product);
 
@@ -96,33 +94,18 @@ public class MainAuthenticatedFragment extends AuthenticatedFragment {
                     Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
-                //---------------------------
+            }
+        });
 
+        btnStartShopping.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //DBHelper db = new DBHelper(view.getContext());
 
-
-
+                //Toast.makeText(view.getContext(), db.deleteProduct(0), Toast.LENGTH_SHORT).show();
             }
         });
 
         return view;
     }
-
-    public static byte[] getBytes(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 1024;
-        byte[] buffer = new byte[bufferSize];
-
-        int len = 0;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
-        }
-        return byteBuffer.toByteArray();
-    }
-
-    public static byte[] bitmapAsByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream output= new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, output);
-        return output.toByteArray();
-    }
-
 }

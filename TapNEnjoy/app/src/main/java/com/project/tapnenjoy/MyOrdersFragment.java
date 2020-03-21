@@ -4,16 +4,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -21,21 +18,17 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.project.tapnenjoy.DBHelper.Constants.Products;
 import com.project.tapnenjoy.DBHelper.DBHelper;
 import com.project.tapnenjoy.Models.Product;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MyOrdersFragment extends Fragment{
 
     private Products products;
-    private SimpleCursorAdapter dataAdapter;
-
-    String product[] = {"Product1", "Product2", "Product3"};
-    String price[] = {"$10.00", "$20.00", "$30.00"};
-    int images[] = {R.drawable.ic_arrow_back_darker_24dp, R.drawable.ic_launcher_background, R.drawable.ic_launcher_app_icon};
 
     public MyOrdersFragment() {
         // Required empty public constructor
@@ -52,20 +45,6 @@ public class MyOrdersFragment extends Fragment{
 
         Cursor cursor = dbHelper.getProducts(true, "asc", 0);
 
-        String[] columns = new String[] {
-                products.PRODUCT_IMAGE,
-                products.PRODUCT_TITLE,
-                products.PRODUCT_PRICE
-        };
-
-        int[] to = new int[] {
-                R.id.imageProduct,
-                R.id.txtProduct,
-                R.id.txtPrice
-        };
-
-        //dataAdapter = new SimpleCursorAdapter( getContext(), R.layout.row_myorders_listview, cursor, columns, to, 0);
-
         ArrayList<Product> products = new ArrayList<>();
 
         while(cursor.moveToNext()) {
@@ -81,7 +60,7 @@ public class MyOrdersFragment extends Fragment{
         }
         cursor.close();
 
-        MyAdapter adapter = new MyAdapter(view.getContext(), R.layout.row_myorders_listview, products);
+        ProductListAdapter adapter = new ProductListAdapter(view.getContext(), R.layout.row_myorders_listview, products);
 
         myOrdersListView.setAdapter(adapter);
 
@@ -95,13 +74,13 @@ public class MyOrdersFragment extends Fragment{
         return view;
     }
 
-    class MyAdapter extends ArrayAdapter<Product>{
+    class ProductListAdapter extends ArrayAdapter<Product>{
 
         Context context;
         ArrayList<Product> products;
         Integer resource;
 
-        MyAdapter (Context c, Integer resource, ArrayList<Product> product){
+        ProductListAdapter(Context c, Integer resource, ArrayList<Product> product){
             super(c, resource, product);
             this.products = product;
             this.context = c;
@@ -111,7 +90,7 @@ public class MyOrdersFragment extends Fragment{
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            if (convertView==null){
+            if (convertView == null){
                 LayoutInflater inflater = (LayoutInflater)MyOrdersFragment.this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.row_myorders_listview,null,true);
             }
@@ -121,12 +100,17 @@ public class MyOrdersFragment extends Fragment{
             ImageView image = convertView.findViewById(R.id.imageProduct);
             TextView tvProduct = convertView.findViewById(R.id.txtProduct);
             TextView tvPrice = convertView.findViewById(R.id.txtPrice);
+            TextView tvDescription = convertView.findViewById(R.id.txtDescription);
 
             Bitmap bitmap = BitmapFactory.decodeByteArray(product.getImage(), 0, product.getImage().length);
+            NumberFormat format = NumberFormat.getCurrencyInstance(Locale.CANADA);
+            String currency = format.format(product.getPrice());
+
 
             image.setImageBitmap(bitmap);
             tvProduct.setText(product.getTitle());
-            tvPrice.setText(product.getTitle());
+            tvPrice.setText(currency);
+            tvDescription.setText(product.getDescription());
 
             return convertView;
         }
