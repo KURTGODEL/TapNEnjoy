@@ -1,18 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:columnCount="2"
+    android:rowCount="10"
     tools:context=".MainAuthenticatedFragment">
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtSearch"
+        android:layout_width="265dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:contentDescription="Bug"
-        android:src="@drawable/flik3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_row="0"
+        android:layout_column="0"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/lblSearch">
 
-</FrameLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="265dp"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/search" />
+
+    <Button
+        android:id="@+id/btnMyOrders"
+        android:layout_width="335dp"
+        android:layout_height="70dp"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:text="MY ORDERS"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnWatchList"
+        android:layout_width="335dp"
+        android:layout_height="70dp"
+        android:layout_row="3"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:text="WATCH LIST"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnMyOffers"
+        android:layout_width="335dp"
+        android:layout_height="70dp"
+        android:layout_row="4"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:text="MY OFFERS"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnStartShopping"
+        android:layout_width="335dp"
+        android:layout_height="70dp"
+        android:layout_row="5"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:text="START SHOPPING"
+        android:textSize="20sp" />
+
+
+</GridLayout>

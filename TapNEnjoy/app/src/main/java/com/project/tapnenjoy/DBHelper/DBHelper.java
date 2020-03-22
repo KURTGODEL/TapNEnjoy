@@ -351,7 +351,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getProducts(Boolean orderByPrice, String orderDirection, Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
-                "SELECT * FROM " + Products.TABLE_PRODUCT_NAME +
+                "SELECT product_id as _id, image, title, price, description, stock, seller_id, status FROM " + Products.TABLE_PRODUCT_NAME +
                     (orderByPrice ?
                             " ORDER BY " + Products.PRODUCT_PRICE + " " + (orderDirection.isEmpty() ? "ASC" : orderDirection) :
                             "") +
