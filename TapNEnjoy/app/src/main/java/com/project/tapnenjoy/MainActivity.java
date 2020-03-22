@@ -80,10 +80,13 @@ public class MainActivity extends AppCompatActivity{
             int id = item.getItemId();
 
             switch(id) {
+                case R.id.home_drawer_item:
+                    displayFragment(MainAuthenticatedFragment.class);
+                    break;
                 case R.id.signup_drawer_item:
                     displayFragment(SignupFragment.class);
                     break;
-                case R.id.login_drawer_item:
+                case R.id.logout_drawer_item:
                     displayFragment(LoginFragment.class);
                     break;
                 default:
@@ -140,13 +143,14 @@ public class MainActivity extends AppCompatActivity{
 
     public void toogleOptionsMenu(Boolean visible){
         if(this._menu != null) {
-            this._menu.findItem(R.id.login_option_item).setVisible(visible);
-            this._menu.findItem(R.id.signup_option_item).setVisible(visible);
+            this._menu.findItem(R.id.home_option_item).setVisible(visible);
+            this._menu.findItem(R.id.logout_option_item).setVisible(visible);
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // update toogleOptionsMenu when changing it
         switch (item.getItemId()) {
             case android.R.id.home: // handle back button
                 //onBackPressed();
@@ -155,14 +159,11 @@ public class MainActivity extends AppCompatActivity{
                     displayFragment(LoginFragment.class); // prevent delay
                 }
                 break;
-            case R.id.login_option_item:
-                displayFragment(LoginFragment.class);
-                break;
-            case R.id.signup_option_item:
-                displayFragment(SignupFragment.class);
-                break;
             case R.id.home_option_item:
                 displayFragment(MainAuthenticatedFragment.class);
+                break;
+            case R.id.logout_drawer_item:
+                displayFragment(LoginFragment.class);
                 break;
         }
 

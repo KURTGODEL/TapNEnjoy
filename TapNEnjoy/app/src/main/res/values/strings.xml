@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TapNEnjoy</string>
     <string name="lblSignUp">SignUp</string>
+    <string name="lblLogOut">LogOut</string>
     <string name="lblLogIn">LogIn</string>
     <string name="Open">Open</string>
     <string name="Close">Close</string>
