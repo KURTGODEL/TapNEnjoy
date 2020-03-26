@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.textfield.TextInputLayout;
 import com.project.tapnenjoy.DBHelper.DBHelper;
 import com.project.tapnenjoy.Models.Product;
+import com.project.tapnenjoy.Models.UserOrder;
 import com.project.tapnenjoy.Models.UserWatch;
 
 import java.io.FileInputStream;
@@ -112,11 +113,20 @@ public class MainAuthenticatedFragment extends AuthenticatedFragment {
         btnStartShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                NewOrder();
             }
         });
 
         return view;
+    }
+
+    private void NewOrder(){
+
+        DBHelper dbHelper = new DBHelper(getContext());
+
+        UserOrder userOrder = new UserOrder(null, 1, 2, 3, 2, true);
+
+        dbHelper.insertUserOrderData(userOrder);
     }
 
     private void NewProduct(){
