@@ -18,14 +18,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-import com.project.tapnenjoy.DBHelper.DBHelper;
-import com.project.tapnenjoy.Models.dummy.DummyContent;
 
 import java.util.List;
 
@@ -83,6 +79,9 @@ public class MainActivity extends AppCompatActivity{
                 case R.id.home_drawer_item:
                     displayFragment(MainAuthenticatedFragment.class);
                     break;
+                case R.id.product_drawer_item:
+                    displayFragment(ProductAddFragment.class);
+                    break;
                 case R.id.signup_drawer_item:
                     displayFragment(SignupFragment.class);
                     break;
@@ -106,9 +105,15 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    public void displayFragment(Class fragmentClass){
+    public void displayFragment(Class fragmentClass, Bundle... bundleArguments){
         try {
             Fragment fragment = (Fragment) fragmentClass.newInstance();
+
+            if(bundleArguments != null && bundleArguments.length > 0){
+                for(Bundle bundle : bundleArguments){
+                    fragment.setArguments(bundle);
+                }
+            }
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -162,7 +167,7 @@ public class MainActivity extends AppCompatActivity{
             case R.id.home_option_item:
                 displayFragment(MainAuthenticatedFragment.class);
                 break;
-            case R.id.logout_drawer_item:
+            case R.id.logout_option_item:
                 displayFragment(LoginFragment.class);
                 break;
         }

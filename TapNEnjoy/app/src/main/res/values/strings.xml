@@ -26,4 +26,13 @@
     <string name="passwordsMatchMessage">Passwords do not match</string>
     <string name="notExistsMessage">Does not exist</string>
     <string name="incorrectPasswordMessage">Incorrect Password</string>
+    <string name="lblProductImageContent">ProductImage</string>
+    <string name="lblAddNumber">+</string>
+    <string name="lblSubNumber">-</string>
+    <string name="lblZero">0</string>
+    <string name="hintProductNumber">0</string>
+    <string name="lblBtnAddCart">Add to Cart</string>
+    <string name="lblBtnBuy">Buy</string>
+    <string name="lblBtnOffer">Make Offer</string>
+    <string name="lblStock">Stock</string>
 </resources>

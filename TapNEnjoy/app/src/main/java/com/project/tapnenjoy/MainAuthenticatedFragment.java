@@ -100,8 +100,6 @@ public class MainAuthenticatedFragment extends AuthenticatedFragment {
         btnMyOffers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 try {
                     FileInputStream fis = new FileInputStream("/storage/self/primary/Pictures/dante.jpg");
                     byte[] bytes = new byte[fis.available()];

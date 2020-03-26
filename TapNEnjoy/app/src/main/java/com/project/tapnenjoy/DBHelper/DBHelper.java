@@ -3,12 +3,16 @@ package com.project.tapnenjoy.DBHelper;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorWindow;
 import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -307,12 +311,16 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(Products.PRODUCT_CREATION,
                 new SimpleDateFormat("yyyyMMddHHmmssSS").format(new Date()));
 
-        long result = db.insert(Products.TABLE_PRODUCT_NAME, null, contentValues);
+        try {
+            long result = db.insert(Products.TABLE_PRODUCT_NAME, null, contentValues);
 
-        if(result == -1){
+            if (result == -1) {
+                return false;
+            } else {
+                return true;
+            }
+        }catch (Exception ex){
             return false;
-        }else{
-            return true;
         }
     }
 
@@ -370,12 +378,62 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
                 "SELECT product_id as _id, image, title, price, description, stock, seller_id, status FROM " + Products.TABLE_PRODUCT_NAME +
-                        " WHERE title LIKE '%" + title +
+                        " WHERE title LIKE '%" + title + "%'" +
                         (orderByPrice ?
-                        "%' ORDER BY " + Products.PRODUCT_PRICE + " " + (orderDirection.isEmpty() ? "ASC" : orderDirection) :
+                        " ORDER BY " + Products.PRODUCT_PRICE + " " + (orderDirection.isEmpty() ? "ASC" : orderDirection) :
                         "") + " LIMIT 10 OFFSET " + offset, null);
 
         return res;
+    }
+
+    /**
+     * @param productId Integer containing product ID to be returned
+     * @return Cursor containing product rows
+     */
+    public Product getProductById(Integer productId){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Product product = null;
+        Cursor res = db.rawQuery(
+                "SELECT product_id as _id, image, title, price, description, stock, seller_id, status FROM " + Products.TABLE_PRODUCT_NAME +
+                        " WHERE product_id = ?", new String[]{ String.valueOf(productId) });
+
+
+        try {
+            Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
+            field.setAccessible(true);
+            field.set(null, 4 * 1024 * 1024); //the 4MB is the new size
+        } catch (Exception e) {
+            Log.e("SYSERROR", e.getMessage());
+        }
+
+        try {
+            while (res.moveToNext()) {
+                Integer id = 0;
+
+                // I do not know why the cursor is returning a wrong column name
+                try{
+                    id = res.getInt(res.getColumnIndex(Products.PRODUCT_ID));
+                }catch (Exception e){
+                    id = res.getInt(res.getColumnIndex("_id"));
+                }
+
+                product =
+                        new Product(
+                                id,
+                                res.getString(res.getColumnIndex(Products.PRODUCT_TITLE)),
+                                res.getDouble(res.getColumnIndex(Products.PRODUCT_PRICE)),
+                                res.getString(res.getColumnIndex(Products.PRODUCT_DESCRIPTION)),
+                                res.getBlob(res.getColumnIndex(Products.PRODUCT_IMAGE)),
+                                res.getInt(res.getColumnIndex(Products.PRODUCT_STOCK)),
+                                res.getInt(res.getColumnIndex(Products.PRODUCT_SELLER)),
+                                (res.getInt(res.getColumnIndex(Products.PRODUCT_STATUS)) == 1)
+                        );
+            }
+        }catch (Exception ex){
+            Log.e("SYSERROR", ex.getMessage());
+        }
+
+        return product;
     }
 
     /**
