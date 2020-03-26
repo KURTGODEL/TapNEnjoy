@@ -533,9 +533,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getUserOrders(Integer userId, Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
-                "SELECT * FROM " +
-                        UserOrders.TABLE_USER_ORDER_NAME +
-                        " WHERE " + UserOrders.USER_ORDER_USER + " = ?" +
+                "SELECT O.user_orders_id, O.user_id, P.seller_id, P.product_id, P.title, p.image " +
+                        " FROM " + UserOrders.TABLE_USER_ORDER_NAME + " O, " + Products.TABLE_PRODUCT_NAME + " P" +
+                        " WHERE O.product_id = P.product_id" +
+                        " AND " + UserOrders.USER_ORDER_USER + " = ?" +
                         " AND " + UserOrders.USER_ORDER_STATUS + " = 1 " +
                         " LIMIT 10 OFFSET " + offset,
                 new String[] { userId.toString() });
@@ -592,9 +593,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getUserWatchs(Integer userId, Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
-                "SELECT W.user_watchs_id, W.user_id, P.title, P.image, P.title, P.price, P.stock" +
+                "SELECT W.user_watchs_id, W.user_id, P.product_id ,P.title, P.image, P.title, P.price, P.stock" +
                         " FROM " + UserWatchs.TABLE_USER_WATCH_NAME + " W, " + Products.TABLE_PRODUCT_NAME + " P " +
-                        " WHERE W.user_watchs_id = P.product_id" +
+                        " WHERE W.product_id = P.product_id" +
                         " AND " + UserWatchs.USER_WATCH_USER + " = ? " +
                         " AND P." + UserWatchs.USER_WATCH_STATUS + " = 1 " +
                         " LIMIT 10 OFFSET " + offset,

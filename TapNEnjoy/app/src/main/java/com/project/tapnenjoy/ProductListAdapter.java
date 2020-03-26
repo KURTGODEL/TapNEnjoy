@@ -9,12 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.project.tapnenjoy.Models.Product;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
