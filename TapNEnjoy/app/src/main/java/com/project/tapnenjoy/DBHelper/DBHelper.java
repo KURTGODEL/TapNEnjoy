@@ -533,11 +533,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getUserOrders(Integer userId, Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
-                "SELECT O.user_orders_id, O.user_id, P.seller_id, P.product_id, P.title, p.image " +
+                "SELECT O.user_orders_id, O.user_id, P.seller_id, P.product_id, P.title, P.price, P.image " +
                         " FROM " + UserOrders.TABLE_USER_ORDER_NAME + " O, " + Products.TABLE_PRODUCT_NAME + " P" +
                         " WHERE O.product_id = P.product_id" +
                         " AND " + UserOrders.USER_ORDER_USER + " = ?" +
-                        " AND " + UserOrders.USER_ORDER_STATUS + " = 1 " +
+                        " AND P." + UserOrders.USER_ORDER_STATUS + " = 1 " +
                         " LIMIT 10 OFFSET " + offset,
                 new String[] { userId.toString() });
         return res;

@@ -29,7 +29,7 @@ public class OrdersFragment extends Fragment{
 
         DBHelper dbHelper = new DBHelper(getContext());
 
-        Cursor cursor = dbHelper.getUserOrders(2, 0);
+        Cursor cursor = dbHelper.getUserOrders(1, 0);
 
         ArrayList<UserOrdersAdapterToList> userOrdersAdapterToList = new ArrayList<>();
 
@@ -37,14 +37,14 @@ public class OrdersFragment extends Fragment{
             userOrdersAdapterToList.add(new UserOrdersAdapterToList(
                     cursor.getInt(cursor.getColumnIndex("user_orders_id")),
                     cursor.getInt(cursor.getColumnIndex("user_id")),
-                    cursor.getInt(cursor.getColumnIndex("productId")),
-                    cursor.getString(cursor.getColumnIndex("productTitle")),
-                    cursor.getDouble(cursor.getColumnIndex("productPrice")),
+                    cursor.getInt(cursor.getColumnIndex("product_id")),
+                    cursor.getString(cursor.getColumnIndex("title")),
+                    cursor.getDouble(cursor.getColumnIndex("price")),
                     cursor.getBlob(cursor.getColumnIndex("image"))));
         }
         cursor.close();
 
-        OrdersListAdapter adapter = new ProductListAdapter(view.getContext(), R.layout.row_products_listview, userOrdersAdapterToList);
+        OrdersListAdapter adapter = new OrdersListAdapter(view.getContext(), R.layout.row_products_listview, userOrdersAdapterToList);
 
         myOrdersListView.setAdapter(adapter);
 
