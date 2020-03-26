@@ -651,7 +651,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 "SELECT " +
                         " W." + UserWatchs.USER_WATCH_ID + ", " +
                         " W." + UserWatchs.USER_WATCH_USER + ", " +
-                        " W." + UserWatchs.USER_WATCH_SELLER + ", " +
                         " P." + Products.PRODUCT_ID + ", " +
                         " P." + Products.PRODUCT_IMAGE + ", " +
                         " P." + Products.PRODUCT_TITLE + ", " +
