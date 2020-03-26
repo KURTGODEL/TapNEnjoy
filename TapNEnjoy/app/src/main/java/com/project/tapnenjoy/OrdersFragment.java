@@ -10,12 +10,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.project.tapnenjoy.DBHelper.DBHelper;
-import com.project.tapnenjoy.Models.Product;
+import com.project.tapnenjoy.Models.UserOrdersAdapterToList;
+
 import java.util.ArrayList;
 
-public class MyOrdersFragment extends Fragment{
+public class OrdersFragment extends Fragment{
 
-    public MyOrdersFragment() {
+    public OrdersFragment() {
         // Required empty public constructor
     }
 
@@ -28,24 +29,22 @@ public class MyOrdersFragment extends Fragment{
 
         DBHelper dbHelper = new DBHelper(getContext());
 
-        Cursor cursor = dbHelper.getProducts(true, "asc", 0);
+        Cursor cursor = dbHelper.getUserOrders(2, 0);
 
-        ArrayList<Product> products = new ArrayList<>();
+        ArrayList<UserOrdersAdapterToList> userOrdersAdapterToList = new ArrayList<>();
 
         while(cursor.moveToNext()) {
-            products.add(new Product(
-                    cursor.getInt(cursor.getColumnIndex("_id")),
-                    cursor.getString(cursor.getColumnIndex("title")),
-                    cursor.getDouble(cursor.getColumnIndex("price")),
-                    cursor.getString(cursor.getColumnIndex("description")),
-                    cursor.getBlob(cursor.getColumnIndex("image")),
-                    cursor.getInt(cursor.getColumnIndex("stock")),
-                    cursor.getInt(cursor.getColumnIndex("seller_id")),
-                    cursor.getInt(cursor.getColumnIndex("status")) > 0));
+            userOrdersAdapterToList.add(new UserOrdersAdapterToList(
+                    cursor.getInt(cursor.getColumnIndex("user_orders_id")),
+                    cursor.getInt(cursor.getColumnIndex("user_id")),
+                    cursor.getInt(cursor.getColumnIndex("productId")),
+                    cursor.getString(cursor.getColumnIndex("productTitle")),
+                    cursor.getDouble(cursor.getColumnIndex("productPrice")),
+                    cursor.getBlob(cursor.getColumnIndex("image"))));
         }
         cursor.close();
 
-        ProductListAdapter adapter = new ProductListAdapter(view.getContext(), R.layout.row_products_listview, products);
+        OrdersListAdapter adapter = new ProductListAdapter(view.getContext(), R.layout.row_products_listview, userOrdersAdapterToList);
 
         myOrdersListView.setAdapter(adapter);
 

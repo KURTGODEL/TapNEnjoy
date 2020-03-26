@@ -3,31 +3,22 @@ package com.project.tapnenjoy.Models;
 public class UserOrdersAdapterToList {
     public Integer userOrderId;
     public Integer userId;
-    public Integer sellerId;
-    public String sellerName;
     public Integer productId;
     public String productTitle;
-    public Integer quantity;
-    public Boolean status;
+    public Double productPrice;
     public byte[] image;
 
     public UserOrdersAdapterToList(Integer Id,
                                    Integer userId,
-                                   Integer sellerId,
-                                   String sellerName,
                                    Integer productId,
                                    String productTitle,
-                                   Integer quantity,
-                                   Boolean status,
+                                   Double productPrice,
                                    byte[] image){
         this.userOrderId = Id;
         this.userId = userId;
-        this.sellerName = sellerName;
-        this.sellerId = sellerId;
         this.productId = productId;
         this.productTitle = productTitle;
-        this.quantity = quantity;
-        this.status = status;
+        this.productPrice = productPrice;
         this.image = image;
     }
 
@@ -47,22 +38,6 @@ public class UserOrdersAdapterToList {
         this.userId = userId;
     }
 
-    public Integer getSellerId() {
-        return sellerId;
-    }
-
-    public void setSellerId(Integer sellerId) {
-        this.sellerId = sellerId;
-    }
-
-    public String getSellerName() {
-        return sellerName;
-    }
-
-    public void setSellerName(String sellerName) {
-        this.sellerName = sellerName;
-    }
-
     public Integer getProductId() {
         return productId;
     }
@@ -79,27 +54,19 @@ public class UserOrdersAdapterToList {
         this.productTitle = productTitle;
     }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
     public byte[] getImage() {
         return image;
     }
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public Double getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(Double productPrice) {
+        this.productPrice = productPrice;
     }
 }

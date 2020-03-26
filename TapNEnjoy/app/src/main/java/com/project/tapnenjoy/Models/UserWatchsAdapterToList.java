@@ -3,30 +3,24 @@ package com.project.tapnenjoy.Models;
 public class UserWatchsAdapterToList {
     public Integer user_watchs_id;
     public Integer userId;
-    public Integer productId;
-    public String productTitle;
+    public Integer product_id;
+    public String title;
     public Double price;
-    public Integer quantity;
-    public Boolean status;
     public Integer stock;
     public byte[] image;
 
     public UserWatchsAdapterToList(Integer Id,
                             Integer userId,
-                            Integer productId,
-                            String productTitle,
+                            Integer product_id,
+                            String title,
                             Double price,
-                            Integer quantity,
-                            Boolean status,
                             Integer stock,
                             byte[] image){
         this.user_watchs_id = Id;
         this.userId = userId;
-        this.productId = productId;
-        this.productTitle = productTitle;
+        this.product_id = product_id;
+        this.title = title;
         this.price = price;
-        this.quantity = quantity;
-        this.status = status;
         this.stock = stock;
         this.image = image;
     }
@@ -47,20 +41,20 @@ public class UserWatchsAdapterToList {
         this.userId = userId;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public Integer getProduct_id() {
+        return product_id;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setProduct_id(Integer product_id) {
+        this.product_id = product_id;
     }
 
-    public String getProductTitle() {
-        return productTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setProductTitle(String productTitle) {
-        this.productTitle = productTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Double getPrice() {
@@ -71,20 +65,12 @@ public class UserWatchsAdapterToList {
         this.price = price;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getStock() {
+        return stock;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 
     public byte[] getImage() {
@@ -93,13 +79,5 @@ public class UserWatchsAdapterToList {
 
     public void setImage(byte[] image) {
         this.image = image;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
     }
 }

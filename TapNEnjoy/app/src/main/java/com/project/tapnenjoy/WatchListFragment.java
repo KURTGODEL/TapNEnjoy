@@ -33,19 +33,17 @@ public class WatchListFragment extends Fragment {
 
         DBHelper dbHelper = new DBHelper(getContext());
 
-        Cursor cursor = dbHelper.getUserWatchs(0, 0);
+        Cursor cursor = dbHelper.getUserWatchs(2, 0);
 
         ArrayList<UserWatchsAdapterToList> userWatchsAdapterToListArrayList = new ArrayList<>();
 
         while(cursor.moveToNext()) {
             userWatchsAdapterToListArrayList.add(new UserWatchsAdapterToList(
                     cursor.getInt(cursor.getColumnIndex("user_watchs_id")),
-                    cursor.getInt(cursor.getColumnIndex("userId")),
-                    cursor.getInt(cursor.getColumnIndex("productId")),
-                    cursor.getString(cursor.getColumnIndex("productTitle")),
+                    cursor.getInt(cursor.getColumnIndex("user_id")),
+                    cursor.getInt(cursor.getColumnIndex("product_id")),
+                    cursor.getString(cursor.getColumnIndex("title")),
                     cursor.getDouble(cursor.getColumnIndex("price")),
-                    cursor.getInt(cursor.getColumnIndex("quantity")),
-                    cursor.getInt(cursor.getColumnIndex("status")) >0,
                     cursor.getInt(cursor.getColumnIndex("stock")),
                     cursor.getBlob(cursor.getColumnIndex("image"))));
         }

@@ -9,9 +9,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.textfield.TextInputLayout;
-import com.project.tapnenjoy.DBHelper.Constants.UserWatchs;
 import com.project.tapnenjoy.DBHelper.DBHelper;
 import com.project.tapnenjoy.Models.Product;
+import com.project.tapnenjoy.Models.UserWatch;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -88,7 +89,7 @@ public class MainAuthenticatedFragment extends AuthenticatedFragment {
         btnMyOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.displayFragment(MyOrdersFragment.class);
+                mainActivity.displayFragment(OrdersFragment.class);
             }
         });
 
@@ -102,43 +103,48 @@ public class MainAuthenticatedFragment extends AuthenticatedFragment {
         btnMyOffers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    FileInputStream fis = new FileInputStream("/storage/self/primary/Pictures/dante.jpg");
-                    byte[] bytes = new byte[fis.available()];
-                    fis.read(bytes);
-                    Product product = new Product(null,
-                            "Dante Button Closure Journal",
-                            11.62,
-                            "The perfect traveling journal. From personal writing to jotting notes during conference meetings, satisfy all your note-taking needs with this custom journal.",
-                            bytes,
-                            19,
-                            9,
-                            true);
-
-                    Boolean isInserted =  db.insertProductData(product);
-
-                    if (isInserted == true){
-                        Toast.makeText(view.getContext(), "Data inserted", Toast.LENGTH_LONG).show();
-                    }
-                    else{
-                        Toast.makeText(view.getContext(), "Data NOT inserted", Toast.LENGTH_LONG).show();
-                    }
-                }
-                catch (IOException e){
-                    Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
+                UserWatch userWatch = new UserWatch(null, 2, 5,true);
+                DBHelper dbHelper = new DBHelper(view.getContext());
+                dbHelper.insertUserWatchData(userWatch);
             }
         });
 
         btnStartShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(view.getContext(), db.deleteProduct(2), Toast.LENGTH_SHORT).show();
-                //NewUsers();
+
             }
         });
 
         return view;
+    }
+
+    private void NewProduct(){
+        try {
+            FileInputStream fis = new FileInputStream("/storage/self/primary/Pictures/dante.jpg");
+            byte[] bytes = new byte[fis.available()];
+            fis.read(bytes);
+            Product product = new Product(null,
+                    "Dante Button Closure Journal",
+                    11.62,
+                    "The perfect traveling journal. From personal writing to jotting notes during conference meetings, satisfy all your note-taking needs with this custom journal.",
+                    bytes,
+                    19,
+                    9,
+                    true);
+
+            Boolean isInserted =  db.insertProductData(product);
+
+            if (isInserted == true){
+                Toast.makeText(getContext(), "Data inserted", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(getContext(), "Data NOT inserted", Toast.LENGTH_LONG).show();
+            }
+        }
+        catch (IOException e){
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 }
