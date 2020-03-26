@@ -44,7 +44,7 @@ public class OrdersFragment extends Fragment{
         }
         cursor.close();
 
-        OrdersListAdapter adapter = new ProductListAdapter(view.getContext(), R.layout.row_products_listview, userOrdersAdapterToList);
+        OrdersListAdapter adapter = new OrdersListAdapter(view.getContext(), R.layout.row_products_listview, userOrdersAdapterToList);
 
         myOrdersListView.setAdapter(adapter);
 

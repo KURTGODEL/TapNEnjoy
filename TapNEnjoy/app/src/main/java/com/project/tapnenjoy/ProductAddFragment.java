@@ -34,7 +34,7 @@ public class ProductAddFragment extends AuthenticatedFragment {
 
     private String Description, Pprice, Pname, Pstock, saveCurrentDate, saveCurrentTime;
     private Double Price;
-    private Integer Id, Stock, sellerId = 0;
+    private Integer Id, Stock;
     private byte[] image;
     private Boolean status;
     private Button addNewProductButton, updateProductButton, queryProductButton, deleteProductButton;
@@ -44,7 +44,6 @@ public class ProductAddFragment extends AuthenticatedFragment {
     private static final int GalleryPick = 1;
     private Uri ImageUri;
     private String productRandomKey, downloadImageUrl;
-    private ProgressDialog loadingBar;
 
 
     MainActivity mainActivity;
@@ -76,7 +75,7 @@ public class ProductAddFragment extends AuthenticatedFragment {
         updateProductButton = view.findViewById(R.id.update_product);
         queryProductButton = view.findViewById(R.id.query_product);
         deleteProductButton = view.findViewById(R.id.delete_product);
-        loadingBar = new ProgressDialog(getContext());
+
 
 /*
         Bundle bundle = new Bundle();
@@ -213,10 +212,7 @@ public class ProductAddFragment extends AuthenticatedFragment {
 
     private void StoreProductInformation()
     {
-        loadingBar.setTitle("Adding New Product");
-        loadingBar.setMessage("Please wait while we are adding the new product.");
-        loadingBar.setCanceledOnTouchOutside(false);
-        loadingBar.show();
+        mainActivity.showProgressDialog("Adding New Product", "Please wait while we are adding the new product.");
 
         Calendar calendar = Calendar.getInstance();
 
@@ -234,13 +230,21 @@ public class ProductAddFragment extends AuthenticatedFragment {
             status = false;
         }
 
-        Product product = new Product(0, Pname, Price, Description,image,Stock, sellerId, status);
+        Integer result =
+                db.insertProductData(
+                        new Product(
+                                0,
+                                Pname,
+                                Price,
+                                Description,
+                                image,
+                                Stock,
+                                mainActivity.getAuthenticatedUserId(),
+                                status));
 
-        if(db.insertProductData(product)){
-            Toast.makeText(getContext(),"Product Added Successfully.", Toast.LENGTH_SHORT).show();
-
+        if(result != 0){
             Bundle bundle = new Bundle();
-            bundle.putInt("Id", product.Id);
+            bundle.putInt("Id", result);
 
             mainActivity.displayFragment(ProductDetailsFragment.class, bundle);
         }else{

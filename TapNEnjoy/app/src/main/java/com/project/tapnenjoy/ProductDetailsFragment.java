@@ -28,8 +28,6 @@ public class ProductDetailsFragment extends AuthenticatedFragment {
     TextView productPrice, productDescription, productName;
     String state = "Normal";
     Integer productID = 0;
-    private ProgressDialog loadingBar;
-
     MainActivity mainActivity;
     private DBHelper db;
 
@@ -49,11 +47,7 @@ public class ProductDetailsFragment extends AuthenticatedFragment {
 
         db = new DBHelper(getContext());
 
-        loadingBar = new ProgressDialog(getContext());
-
-        if (loadingBar.isShowing()) {
-            loadingBar.hide();
-        }
+        mainActivity.hideProgressDialog();
 
         Bundle bundle = this.getArguments();
 

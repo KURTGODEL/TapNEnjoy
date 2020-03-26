@@ -133,9 +133,9 @@ public class MainAuthenticatedFragment extends AuthenticatedFragment {
                     9,
                     true);
 
-            Boolean isInserted =  db.insertProductData(product);
+            Integer result =  db.insertProductData(product);
 
-            if (isInserted == true){
+            if (result != 0){
                 Toast.makeText(getContext(), "Data inserted", Toast.LENGTH_LONG).show();
             }
             else{

@@ -297,7 +297,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param product Model containing system's product data
      * @return Boolean true if success
      */
-    public boolean insertProductData(Product product){
+    public Integer insertProductData(Product product){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -315,12 +315,12 @@ public class DBHelper extends SQLiteOpenHelper {
             long result = db.insert(Products.TABLE_PRODUCT_NAME, null, contentValues);
 
             if (result == -1) {
-                return false;
+                return 0;
             } else {
-                return true;
+                return (int)result;
             }
         }catch (Exception ex){
-            return false;
+            return 0;
         }
     }
 

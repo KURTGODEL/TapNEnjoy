@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity{
     private Menu _menu = null;
     private Toolbar toolbar;
     private TextView toolBarTitle;
+    private ProgressDialog loadingBar;
 
 
     @Override
@@ -221,6 +223,20 @@ public class MainActivity extends AppCompatActivity{
     public void setToolbarTitle(String title){
         if(toolBarTitle != null){
             toolBarTitle.setText(title);
+        }
+    }
+
+    public void showProgressDialog(String title, String message){
+        loadingBar = new ProgressDialog(this);
+        loadingBar.setTitle(title);
+        loadingBar.setMessage(message);
+        loadingBar.setCanceledOnTouchOutside(false);
+        loadingBar.show();
+    }
+
+    public void hideProgressDialog(){
+        if(loadingBar != null && loadingBar.isShowing()){
+            loadingBar.dismiss();
         }
     }
 
