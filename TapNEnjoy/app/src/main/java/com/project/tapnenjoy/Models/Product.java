@@ -80,4 +80,20 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public float getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(float sellerId) {
+        this.sellerId = sellerId;
+    }
+
+    public float getStock() {
+        return stock;
+    }
+
+    public void setStock(float stock) {
+        this.stock = stock;
+    }
 }

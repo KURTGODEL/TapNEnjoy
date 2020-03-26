@@ -9,7 +9,7 @@
     tools:context=".MainAuthenticatedFragment">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtSearch"
+        android:id="@+id/txtMainSearch"
         android:layout_width="265dp"
         android:layout_height="wrap_content"
         android:layout_row="0"
