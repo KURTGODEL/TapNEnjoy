@@ -194,20 +194,20 @@ public class DBHelper extends SQLiteOpenHelper {
     /**
      * @param username String containing username to be checked
      * @param password String containing password to be checked
-     * @return Boolean true if user is in the database
+     * @return Integer containing user ID or 0 if not found
      */
-    public boolean checkUsernameAndPassword(String username, String password){
+    public Integer checkUsernameAndPassword(String username, String password){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
-                "select 1 from " + Users.TABLE_USER_NAME +
+                "select " + Users.USER_ID + " from " + Users.TABLE_USER_NAME +
                         " where " + Users.USER_USERNAME + " = ?" +
                         " and " + Users.USER_PASSWORD + " = ?",
                 new String[] {username, password});
 
         if(res.moveToLast()){
-            return true;
+            return res.getInt(res.getColumnIndex(Users.USER_ID));
         }else{
-            return false;
+            return 0;
         }
     }
 
@@ -408,18 +408,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         try {
             while (res.moveToNext()) {
-                Integer id = 0;
-
-                // I do not know why the cursor is returning a wrong column name
-                try{
-                    id = res.getInt(res.getColumnIndex(Products.PRODUCT_ID));
-                }catch (Exception e){
-                    id = res.getInt(res.getColumnIndex("_id"));
-                }
-
                 product =
                         new Product(
-                                id,
+                                res.getInt(res.getColumnIndex("_id")),
                                 res.getString(res.getColumnIndex(Products.PRODUCT_TITLE)),
                                 res.getDouble(res.getColumnIndex(Products.PRODUCT_PRICE)),
                                 res.getString(res.getColumnIndex(Products.PRODUCT_DESCRIPTION)),
@@ -591,11 +582,19 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getUserOrders(Integer userId, Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
-                "SELECT * FROM " +
-                        UserOrders.TABLE_USER_ORDER_NAME +
-                        " WHERE " + UserOrders.USER_ORDER_USER + " = ?" +
-                        " AND " + UserOrders.USER_ORDER_STATUS + " = 1 " +
-                        " LIMIT 10 OFFSET " + offset,
+                "SELECT " +
+                        " O." + UserOrders.USER_ORDER_ID + ", " +
+                        " O." + UserOrders.USER_ORDER_USER + ", " +
+                        " P." + Products.PRODUCT_ID + ", " +
+                        " P." + Products.PRODUCT_IMAGE + ", " +
+                        " P." + Products.PRODUCT_TITLE + ", " +
+                        " P." + Products.PRODUCT_PRICE + ", " +
+                        " P." + Products.PRODUCT_STOCK +
+                    " FROM " + UserOrders.TABLE_USER_ORDER_NAME + " O, " + Products.TABLE_PRODUCT_NAME + " P " +
+                    " WHERE O." + UserOrders.USER_ORDER_PRODUCT + " = P." + Products.PRODUCT_ID + " " +
+                    " AND O." + UserOrders.USER_ORDER_USER + " = ?" +
+                    " AND O." + UserOrders.USER_ORDER_STATUS + " = 1 " +
+                    " LIMIT 10 OFFSET " + offset,
                 new String[] { userId.toString() });
         return res;
     }
@@ -650,11 +649,18 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getUserWatchs(Integer userId, Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
-                "SELECT W.user_watchs_id, W.user_id, P.title, P.image, P.title, P.price, P.stock" +
+                "SELECT " +
+                        " W." + UserWatchs.USER_WATCH_ID + ", " +
+                        " W." + UserWatchs.USER_WATCH_USER + ", " +
+                        " P." + Products.PRODUCT_ID + ", " +
+                        " P." + Products.PRODUCT_IMAGE + ", " +
+                        " P." + Products.PRODUCT_TITLE + ", " +
+                        " P." + Products.PRODUCT_PRICE + " , " +
+                        " P." + Products.PRODUCT_STOCK +
                         " FROM " + UserWatchs.TABLE_USER_WATCH_NAME + " W, " + Products.TABLE_PRODUCT_NAME + " P " +
-                        " WHERE W.user_watchs_id = P.product_id" +
-                        " AND " + UserWatchs.USER_WATCH_USER + " = ? " +
-                        " AND P." + UserWatchs.USER_WATCH_STATUS + " = 1 " +
+                        " WHERE W." + UserWatchs.USER_WATCH_PRODUCT + " = P." + Products.PRODUCT_ID +
+                        " AND W." + UserWatchs.USER_WATCH_USER + " = ? " +
+                        " AND W." + UserWatchs.USER_WATCH_STATUS + " = 1 " +
                         " LIMIT 10 OFFSET " + offset,
                 new String[] { userId.toString() });
         return res;
@@ -710,11 +716,19 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getUserOffers(Integer userId, Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
-                "SELECT * FROM " +
-                        UserOffers.TABLE_USER_OFFER_NAME +
-                        " WHERE " + UserOffers.USER_OFFER_USER + " = ? " +
-                        " AND " + UserOffers.USER_OFFER_STATUS + " = 1 " +
-                        " LIMIT 10 OFFSET " + offset,
+              "SELECT " +
+                    " O." + UserOffers.USER_OFFER_ID + ", " +
+                    " O." + UserOffers.USER_OFFER_USER + ", " +
+                    " P." + Products.PRODUCT_ID + ", " +
+                    " P." + Products.PRODUCT_IMAGE + ", " +
+                    " P." + Products.PRODUCT_TITLE + ", " +
+                    " P." + Products.PRODUCT_PRICE + " , " +
+                    " P." + Products.PRODUCT_STOCK +
+                    " FROM " + UserOffers.TABLE_USER_OFFER_NAME + " O, " + Products.TABLE_PRODUCT_NAME + " P " +
+                    " WHERE O." + UserOffers.USER_OFFER_PRODUCT + " = P." + Products.PRODUCT_ID +
+                    " AND O." + UserOffers.USER_OFFER_USER + " = ? " +
+                    " AND O." + UserOffers.USER_OFFER_STATUS + " = 1 " +
+                    " LIMIT 10 OFFSET " + offset,
                 new String[] { userId.toString() });
         return res;
     }
@@ -731,5 +745,4 @@ public class DBHelper extends SQLiteOpenHelper {
                         " AND " + UserOffers.USER_OFFER_STATUS + " = 1 ",
                 new String[] { userId.toString() });
     }
-
 }

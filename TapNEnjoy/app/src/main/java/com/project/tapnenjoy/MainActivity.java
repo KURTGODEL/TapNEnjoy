@@ -127,6 +127,16 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+    public void setAuthenticatedUserId(Integer userId){
+        SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+        sharedPreferences.edit().putInt("userId", userId).apply();
+    }
+
+    public Integer getAuthenticatedUserId(){
+        SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+        return sharedPreferences.getInt("userId", 0);
+    }
+
     public void setIsLogged(Boolean isLogged){
         SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
         sharedPreferences.edit().putBoolean("logged", isLogged).apply();

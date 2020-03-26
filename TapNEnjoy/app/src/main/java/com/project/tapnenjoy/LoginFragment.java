@@ -45,6 +45,7 @@ public class LoginFragment extends Fragment {
         // hide tool bar on Login
         mainActivity.getSupportActionBar().hide();
 
+        mainActivity.setAuthenticatedUserId(0);
         mainActivity.setIsLogged(false);
 
 
@@ -87,8 +88,10 @@ public class LoginFragment extends Fragment {
                     return;
                 }
 
-                if (databaseHelper.checkUsernameAndPassword(username, password)) {
+                Integer result = databaseHelper.checkUsernameAndPassword(username, password);
+                if (result != 0) {
                     mainActivity.setIsLogged(true);
+                    mainActivity.setAuthenticatedUserId(result);
                     mainActivity.displayFragment(MainAuthenticatedFragment.class);
                 } else {
                     txtUsername.setErrorEnabled(false);

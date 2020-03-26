@@ -41,18 +41,20 @@ public class MainAuthenticatedFragment extends AuthenticatedFragment {
 
         mainActivity = ((MainActivity)getActivity());
 
-
         view.setFocusableInTouchMode(true);
         view.requestFocus();
 
-        MainActivity activity = ((MainActivity)getActivity());
+        if(mainActivity.getAuthenticatedUserId() == 0){
+            mainActivity.displayFragment(LoginFragment.class);
+            return null;
+        }
 
         // set up action bar for internal screens
-        activity.getSupportActionBar().show();
-        activity.setToolbarTitle("Dashboard");
-        activity.toogleOptionsMenu(true);
+            mainActivity.getSupportActionBar().show();
+        mainActivity.setToolbarTitle("Dashboard");
+        mainActivity.toogleOptionsMenu(true);
 
-        ActionBar actionBar = activity.getSupportActionBar();
+        ActionBar actionBar = mainActivity.getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_dehaze_darker_24dp);
 
         btnMyOrders = view.findViewById(R.id.btnMyOrders);
