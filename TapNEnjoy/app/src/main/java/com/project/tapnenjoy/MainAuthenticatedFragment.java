@@ -1,9 +1,5 @@
 package com.project.tapnenjoy;
 
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
+import androidx.fragment.app.FragmentTransaction;
+import com.google.android.material.textfield.TextInputLayout;
+import com.project.tapnenjoy.DBHelper.Constants.UserWatchs;
 import com.project.tapnenjoy.DBHelper.DBHelper;
 import com.project.tapnenjoy.Models.Product;
 import java.io.FileInputStream;
@@ -19,8 +18,11 @@ import java.io.IOException;
 
 public class MainAuthenticatedFragment extends AuthenticatedFragment {
 
-    Button btnMyOrders, btnWatchList, btnMyOffers, btnStartShopping;
+    Button btnMyOrders, btnWatchList, btnMyOffers, btnStartShopping, btnSearh;
     MainActivity mainActivity;
+    TextInputLayout txtMainSearch;
+
+    private DBHelper db = new DBHelper(getContext());
 
     public MainAuthenticatedFragment() {
         // Required empty public constructor
@@ -39,6 +41,7 @@ public class MainAuthenticatedFragment extends AuthenticatedFragment {
 
         mainActivity = ((MainActivity)getActivity());
 
+
         view.setFocusableInTouchMode(true);
         view.requestFocus();
 
@@ -55,6 +58,30 @@ public class MainAuthenticatedFragment extends AuthenticatedFragment {
         btnMyOrders = view.findViewById(R.id.btnMyOrders);
         btnMyOffers = view.findViewById(R.id.btnMyOffers);
         btnStartShopping = view.findViewById(R.id.btnStartShopping);
+        btnSearh = view.findViewById(R.id.btnSearch);
+        btnWatchList = view.findViewById(R.id.btnWatchList);
+        txtMainSearch = view.findViewById(R.id.txtMainSearch);
+
+        btnSearh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String keySearch = txtMainSearch.getEditText().getText().toString();
+
+                ProductSearchResultFragment newFragment = new ProductSearchResultFragment();
+
+                Bundle args = new Bundle();
+                args.putString(ProductSearchResultFragment.key, keySearch);
+
+                newFragment.setArguments(args);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                transaction.replace(R.id.nav_host_fragment, newFragment);
+                transaction.addToBackStack(null);
+
+                transaction.commit();
+            }
+        });
 
         btnMyOrders.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,10 +90,17 @@ public class MainAuthenticatedFragment extends AuthenticatedFragment {
             }
         });
 
+        btnWatchList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.displayFragment(WatchListFragment.class);
+            }
+        });
+
         btnMyOffers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DBHelper db = new DBHelper(view.getContext());
+
 
                 try {
                     FileInputStream fis = new FileInputStream("/storage/self/primary/Pictures/dante.jpg");
@@ -100,9 +134,8 @@ public class MainAuthenticatedFragment extends AuthenticatedFragment {
         btnStartShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //DBHelper db = new DBHelper(view.getContext());
-
-                //Toast.makeText(view.getContext(), db.deleteProduct(0), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(view.getContext(), db.deleteProduct(2), Toast.LENGTH_SHORT).show();
+                //NewUsers();
             }
         });
 

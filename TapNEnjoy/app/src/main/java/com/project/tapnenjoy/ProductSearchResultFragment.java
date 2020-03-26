@@ -1,34 +1,49 @@
 package com.project.tapnenjoy;
 
+
 import android.database.Cursor;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.project.tapnenjoy.DBHelper.DBHelper;
 import com.project.tapnenjoy.Models.Product;
+
 import java.util.ArrayList;
 
-public class MyOrdersFragment extends Fragment{
 
-    public MyOrdersFragment() {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class ProductSearchResultFragment extends Fragment {
+
+    final static String key = "keyWord";
+
+    public ProductSearchResultFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_my_orders, container, false);
+        View view = inflater.inflate(R.layout.fragment_product_search_result, container, false);
 
-        ListView myOrdersListView = view.findViewById(R.id.myOrdersListView);
+        Bundle args = getArguments();
 
-        DBHelper dbHelper = new DBHelper(getContext());
+        String keyWord =  args.getString(key);
 
-        Cursor cursor = dbHelper.getProducts(true, "asc", 0);
+        ListView myOrdersListView = view.findViewById(R.id.productSearchListView);
+
+        DBHelper dbHelper = new DBHelper(view.getContext());
+
+        Cursor cursor = dbHelper.getProductsByTitle(true, "asc", 0, keyWord);
 
         ArrayList<Product> products = new ArrayList<>();
 

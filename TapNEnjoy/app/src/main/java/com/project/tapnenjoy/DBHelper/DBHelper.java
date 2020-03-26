@@ -351,11 +351,29 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getProducts(Boolean orderByPrice, String orderDirection, Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
-                "SELECT product_id as _id, image, title, price, description, stock, seller_id, status FROM " + Products.TABLE_PRODUCT_NAME +
-                    (orderByPrice ?
+                "SELECT product_id as _id, image, title, price, description, stock, seller_id, status " +
+                        "FROM " + Products.TABLE_PRODUCT_NAME + (orderByPrice ?
                             " ORDER BY " + Products.PRODUCT_PRICE + " " + (orderDirection.isEmpty() ? "ASC" : orderDirection) :
                             "") +
                     " LIMIT 10 OFFSET " + offset, null);
+
+        return res;
+    }
+
+    /**
+     * @param orderByPrice True or False for price ordination
+     * @param orderDirection ASC or DESC for price ordination direction
+     * @param offset Integer containing index where the SELECT query should start retrieving rows
+     * @return Cursor containing product rows
+     */
+    public Cursor getProductsByTitle(Boolean orderByPrice, String orderDirection, Integer offset, String title){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(
+                "SELECT product_id as _id, image, title, price, description, stock, seller_id, status FROM " + Products.TABLE_PRODUCT_NAME +
+                        " WHERE title LIKE '%" + title +
+                        (orderByPrice ?
+                        "%' ORDER BY " + Products.PRODUCT_PRICE + " " + (orderDirection.isEmpty() ? "ASC" : orderDirection) :
+                        "") + " LIMIT 10 OFFSET " + offset, null);
 
         return res;
     }
@@ -495,7 +513,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param offset Integer containing index where the SELECT query should start retrieving rows
      * @return Cursor containing user orders rows from the database
      */
-    public Cursor getUserOrders(Integer userId, Integer offset){
+    public Cursor getUserOrders_old(Integer userId, Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
                 "SELECT * FROM " +
@@ -507,6 +525,22 @@ public class DBHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    /**
+     * @param userId Integer containing user Id for WHERE clause
+     * @param offset Integer containing index where the SELECT query should start retrieving rows
+     * @return Cursor containing user orders rows from the database
+     */
+    public Cursor getUserOrders(Integer userId, Integer offset){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(
+                "SELECT * FROM " +
+                        UserOrders.TABLE_USER_ORDER_NAME +
+                        " WHERE " + UserOrders.USER_ORDER_USER + " = ?" +
+                        " AND " + UserOrders.USER_ORDER_STATUS + " = 1 " +
+                        " LIMIT 10 OFFSET " + offset,
+                new String[] { userId.toString() });
+        return res;
+    }
 
     /* User Watch CRUD */
 
@@ -538,13 +572,31 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param offset Integer containing index where the SELECT query should start retrieving rows
      * @return Cursor containing user watchs rows from the database
      */
-    public Cursor getUserWatchs(Integer userId, Integer offset){
+    public Cursor getUserWatchs_old(Integer userId, Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
                 "SELECT * FROM " +
                         UserWatchs.TABLE_USER_WATCH_NAME +
                         " WHERE " + UserWatchs.USER_WATCH_USER + " = ? " +
                         " AND " + UserWatchs.USER_WATCH_STATUS + " = 1 " +
+                        " LIMIT 10 OFFSET " + offset,
+                new String[] { userId.toString() });
+        return res;
+    }
+
+    /**
+     * @param userId Integer containing user Id for WHERE clause
+     * @param offset Integer containing index where the SELECT query should start retrieving rows
+     * @return Cursor containing user watchs rows from the database
+     */
+    public Cursor getUserWatchs(Integer userId, Integer offset){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(
+                "SELECT W.user_watchs_id, W.user_id, P.title, P.image, P.title, P.price, P.stock" +
+                        " FROM " + UserWatchs.TABLE_USER_WATCH_NAME + " W, " + Products.TABLE_PRODUCT_NAME + " P " +
+                        " WHERE W.user_watchs_id = P.product_id" +
+                        " AND " + UserWatchs.USER_WATCH_USER + " = ? " +
+                        " AND P." + UserWatchs.USER_WATCH_STATUS + " = 1 " +
                         " LIMIT 10 OFFSET " + offset,
                 new String[] { userId.toString() });
         return res;
