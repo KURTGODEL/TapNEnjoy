@@ -52,12 +52,9 @@ public class MainAuthenticatedFragment extends AuthenticatedFragment {
         }
 
         // set up action bar for internal screens
-            mainActivity.getSupportActionBar().show();
         mainActivity.setToolbarTitle("Dashboard");
-        mainActivity.toogleOptionsMenu(true);
 
-        ActionBar actionBar = mainActivity.getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_dehaze_darker_24dp);
+        mainActivity.setUpDrawerButton();
 
         btnMyOrders = view.findViewById(R.id.btnMyOrders);
         btnMyOffers = view.findViewById(R.id.btnMyOffers);

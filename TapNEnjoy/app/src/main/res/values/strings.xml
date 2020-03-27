@@ -20,6 +20,7 @@
     <string name="lblIsSeller">Is Seller</string>
     <string name="createUserErrorMessage">Error to Create User</string>
     <string name="createUserSuccessMessasge">User successfully created</string>
+    <string name="lblAlertTitle">System Alert</string>
     <string name="lblOk">Ok</string>
     <string name="userExistsMessage">Username already exists</string>
     <string name="lblRequired">Required</string>
@@ -35,4 +36,16 @@
     <string name="lblBtnBuy">Buy</string>
     <string name="lblBtnOffer">Make Offer</string>
     <string name="lblStock">Stock</string>
+    <string name="lblDelete">Delete</string>
+    <string name="lblEmptyPrice">$0,00</string>
+    <string name="contentImageDesc">Product Image</string>
+    <string name="lblAddProduct">Add Product</string>
+    <string name="lblAddNewProduct">Add New Product</string>
+    <string name="lblUpdateProduct">Update Product</string>
+    <string name="lblDeleteProduct">Delete Product</string>
+    <string name="lblBtnMyOrders">MY ORDERS</string>
+    <string name="lblBtnWatchList">WATCH LIST</string>
+    <string name="lblBtnMyOffers">MY OFFERS</string>
+    <string name="lblBtnStartShopping">START SHOPPING</string>
+    <string name="lblInStock">In stock:</string>
 </resources>

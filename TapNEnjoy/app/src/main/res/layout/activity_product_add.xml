@@ -1,196 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/grid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:columnCount="1"
-    android:rowCount="10"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ProductAddFragment">
 
-    <ImageView
-        android:id="@+id/select_product_image"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="137dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="10dp"
-        android:layout_row="0"
-        android:layout_column="0"
-        android:cropToPadding="false"
-        android:scaleType="fitCenter"
-        android:src="@drawable/noimage" />
+        android:layout_height="match_parent"
+        android:background="@drawable/layout"
+        android:backgroundTint="@color/colorPrimaryLight"
+        android:backgroundTintMode="multiply"
+        android:isScrollContainer="false">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/product_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_row="1"
-        android:layout_column="0"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:hint="Product Name..."
-        app:errorEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <GridLayout
+            android:id="@+id/grid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="match_parent"
+            android:columnCount="1"
+            android:rowCount="10">
+
+            <ImageView
+                android:id="@+id/select_product_image"
+                android:layout_width="match_parent"
+                android:layout_height="137dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:cropToPadding="false"
+                android:scaleType="fitCenter"
+                android:src="@drawable/noimage" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:hint="Product Name..."
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/product_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_row="2"
-        android:layout_column="0"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:hint="Product Description..."
-        app:errorEnabled="true">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/product_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:hint="Product Description..."
+                app:errorEnabled="true">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/product_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_row="3"
-        android:layout_column="0"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:hint="Product Price..."
-        app:errorEnabled="true">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/product_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:hint="Product Price..."
+                app:errorEnabled="true">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal" />
-    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_row="4"
-        android:layout_column="0"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_gravity="center|center_horizontal"
-        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="4"
+                android:layout_column="0"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_gravity="center|center_horizontal"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="40dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="@string/lblStock"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="40dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/lblStock"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btn_sub_number"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|center_horizontal"
-            android:layout_weight="1"
-            android:background="@color/colorPrimaryDark"
-            android:gravity="center|center_horizontal"
-            android:maxWidth="20dp"
-            android:text="@string/lblSubNumber"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+                <Button
+                    android:id="@+id/btn_sub_number"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryDark"
+                    android:gravity="center|center_horizontal"
+                    android:maxWidth="20dp"
+                    android:text="@string/lblSubNumber"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/product_stock"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|center_horizontal"
-            android:gravity="center|center_horizontal"
-            android:hint="Product Stock..."
-            android:inputType="number"
-            android:text="@string/lblZero"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/product_stock"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal"
+                    android:gravity="center|center_horizontal"
+                    android:hint="Product Stock..."
+                    android:inputType="number"
+                    android:text="@string/lblZero"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btn_add_number"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|center_horizontal"
-            android:layout_weight="1"
-            android:width="20dp"
-            android:background="@color/colorPrimaryDark"
-            android:gravity="center|center_horizontal"
-            android:maxWidth="20dp"
-            android:text="@string/lblAddNumber"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+                <Button
+                    android:id="@+id/btn_add_number"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_weight="1"
+                    android:width="20dp"
+                    android:background="@color/colorPrimaryDark"
+                    android:gravity="center|center_horizontal"
+                    android:maxWidth="20dp"
+                    android:text="@string/lblAddNumber"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/add_new_product"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_row="5"
-        android:layout_column="0"
-        android:text="Add Product"
-        android:textColor="@android:color/white"
-        android:layout_weight="1"
-        android:textSize="20sp" />
+            <Button
+                android:id="@+id/add_new_product"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_row="5"
+                android:layout_column="0"
+                android:layout_gravity="center|center_horizontal"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="80dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorSuccess"
+                android:drawableLeft="@drawable/ic_save_white_24dp"
+                android:gravity="center|center_horizontal"
+                android:text="@string/lblAddProduct"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                app:iconGravity="textStart" />
 
-    <Button
-        android:id="@+id/update_product"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_row="6"
-        android:layout_column="0"
-        android:visibility="gone"
-        android:text="Update Product"
-        android:textColor="@android:color/white"
-        android:layout_weight="1"
-        android:textSize="20sp" />
+            <Button
+                android:id="@+id/update_product"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_row="6"
+                android:layout_column="0"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="80dp"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:backgroundTint="@color/colorSuccess"
+                android:drawableLeft="@drawable/ic_save_white_24dp"
+                android:text="@string/lblUpdateProduct"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/query_product"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_row="7"
-        android:layout_column="0"
-        android:visibility="gone"
-        android:text="Query Product"
-        android:textColor="@android:color/white"
-        android:layout_weight="1"
-        android:textSize="20sp" />
+            <Button
+                android:id="@+id/query_product"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="80dp"
+                android:layout_row="7"
+                android:layout_column="0"
+                android:visibility="gone"
+                android:text="Query Product"
+                android:textColor="@android:color/white"
+                android:layout_weight="1"
+                android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/delete_product"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_row="8"
-        android:layout_column="0"
-        android:visibility="gone"
-        android:text="Delete Product"
-        android:textColor="@android:color/white"
-        android:layout_weight="1"
-        android:textSize="20sp" />
+            <Button
+                android:id="@+id/delete_product"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_row="8"
+                android:layout_column="0"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="80dp"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:backgroundTint="@color/colorDanger"
+                android:drawableLeft="@drawable/ic_delete_white_24dp"
+                android:text="@string/lblDeleteProduct"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
 
-</GridLayout>
+        </GridLayout>
+    </ScrollView>
+</FrameLayout>

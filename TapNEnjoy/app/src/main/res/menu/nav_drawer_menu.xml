@@ -9,7 +9,7 @@
     <item
         android:id="@+id/product_drawer_item"
         android:icon="@drawable/ic_playlist_add_black_24dp"
-        android:title="New Product"></item>
+        android:title="Product Managing"></item>
     <item
         android:id="@+id/signup_drawer_item"
         android:icon="@drawable/ic_arrow_upward_black_24dp"

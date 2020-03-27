@@ -43,11 +43,14 @@ public class ProductDetailsFragment extends AuthenticatedFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_product_details, container, false);
+
         mainActivity = ((MainActivity) getActivity());
+        mainActivity.setToolbarTitle("Product Detail");
+        mainActivity.setUpDrawerButton();
+        mainActivity.hideProgressDialog();
 
         db = new DBHelper(getContext());
 
-        mainActivity.hideProgressDialog();
 
         Bundle bundle = this.getArguments();
 
@@ -132,6 +135,8 @@ public class ProductDetailsFragment extends AuthenticatedFragment {
             productName.setText(product.title);
             productDescription.setText(product.description);
             productPrice.setText(product.price.toString());
+
+            mainActivity.setToolbarTitle(product.title);
         }
     }
 }

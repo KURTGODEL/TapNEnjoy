@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/layout"
+    android:backgroundTint="@color/colorPrimaryLight"
+    android:backgroundTintMode="multiply"
+    tools:context=".ProductManagingListFragment">
+
+    <Button
+        android:id="@+id/add_new_product"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="top"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/colorSuccess"
+        android:drawableLeft="@drawable/ic_add_box_white_24dp"
+        android:gravity="center|center_horizontal"
+        android:text="@string/lblAddNewProduct"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        app:iconGravity="textStart" />
+
+    <ListView
+        android:id="@+id/productListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp" />
+
+</FrameLayout>

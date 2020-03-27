@@ -57,17 +57,18 @@ public class SignupFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
         mainActivity = ((MainActivity)getActivity());
 
-        mainActivity.toogleOptionsMenu(false);
+        //mainActivity.toogleOptionsMenu(false);
         mainActivity.setToolbarTitle(getString(R.string.lblSignUp));
 
         // show action bar once again e override back button
-        ActionBar actionBar = mainActivity.getSupportActionBar();
+        //ActionBar actionBar = mainActivity.getSupportActionBar();
 
-        actionBar.show();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_darker_24dp);
+        //actionBar.show();
+        //actionBar.setDisplayHomeAsUpEnabled(true);
+        //actionBar.setDisplayShowHomeEnabled(true);
+        //actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_darker_24dp);
 
+        mainActivity.setUpBackButton();
 
         Button back = view.findViewById(R.id.btnBack);
 

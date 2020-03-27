@@ -1,5 +1,6 @@
 package com.project.tapnenjoy;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -12,14 +13,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -39,7 +45,7 @@ public class MainActivity extends AppCompatActivity{
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -82,7 +88,7 @@ public class MainActivity extends AppCompatActivity{
                     displayFragment(MainAuthenticatedFragment.class);
                     break;
                 case R.id.product_drawer_item:
-                    displayFragment(ProductAddFragment.class);
+                    displayFragment(ProductManagingListFragment.class);
                     break;
                 case R.id.signup_drawer_item:
                     displayFragment(SignupFragment.class);
@@ -100,6 +106,47 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+        // handle OS back button pressed
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                builder
+                    .setCancelable(true)
+                    .setTitle(R.string.lblAlertTitle)
+                    .setMessage("Are you sure you want to close this application?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", null);
+
+                AlertDialog alert = builder.create();
+                alert.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        Button yesButton =
+                                ((AlertDialog) dialogInterface).getButton(DialogInterface.BUTTON_POSITIVE);
+
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT
+                        );
+                        params.setMargins(20,0,0,0);
+
+                        yesButton.setLayoutParams(params);
+                    }
+                });
+
+                alert.show();
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
+
+        // start application
         if(getIsLogged()){
             displayFragment(MainAuthenticatedFragment.class);
         }else{
@@ -167,13 +214,15 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // update toogleOptionsMenu when changing it
+        // update toggleOptionsMenu when changing it
         switch (item.getItemId()) {
             case android.R.id.home: // handle back button
-                //onBackPressed();
                 closeDrawer();
-                if(tellFragments()) {
-                    displayFragment(LoginFragment.class); // prevent delay
+
+                Fragment fragment = tellFragments();
+
+                if(fragment != null) {
+                    displayFragment(fragment.getClass()); // prevent delay
                 }
                 break;
             case R.id.home_option_item:
@@ -191,27 +240,24 @@ public class MainActivity extends AppCompatActivity{
 
         return super.onOptionsItemSelected(item);
     }
-/*
-    @Override
-    public void onBackPressed() {
-        if(tellFragments()){
-            if (dl.isDrawerOpen(GravityCompat.START)) {
-                closeDrawer();
-            }
-        }
-    }
-*/
-    private boolean tellFragments(){
+
+    private Fragment tellFragments(){
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
 
+        // must add every Fragment which implements BackButton
         for(Fragment f : fragments){
             if(f != null && f instanceof SignupFragment) {
                 ((SignupFragment) f).onBackPressed();
-                return true;
+                return LoginFragment.newInstance();
+            }
+
+            if(f != null && f instanceof ProductAddFragment) {
+                ((ProductAddFragment) f).onBackPressed();
+                return ProductManagingListFragment.newInstance();
             }
         }
 
-        return false;
+        return null;
     }
 
     // call it from any fragment
@@ -226,27 +272,48 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    public void showProgressDialog(String title, String message){
+    public ProgressDialog showProgressDialog(String title, String message){
         loadingBar = new ProgressDialog(this);
+
         loadingBar.setTitle(title);
         loadingBar.setMessage(message);
         loadingBar.setCanceledOnTouchOutside(false);
         loadingBar.show();
+
+        return loadingBar;
     }
 
     public void hideProgressDialog(){
         if(loadingBar != null && loadingBar.isShowing()){
-            loadingBar.dismiss();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    loadingBar.dismiss();
+                }
+            }, 1500);
         }
     }
 
-    public void closeSoftKeyBoard(){
-        View view = this.getCurrentFocus();
+    public void setUpBackButton(){
+        toogleOptionsMenu(false);
 
-        if (view != null){
-            InputMethodManager imm = (InputMethodManager)
-                    getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+        // show action bar once again e override back button
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.show();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_darker_24dp);
+    }
+
+    public void setUpDrawerButton(){
+        toogleOptionsMenu(true);
+
+        // show action bar once again e override back button
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.show();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_dehaze_darker_24dp);
     }
 }

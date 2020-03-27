@@ -359,7 +359,15 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getProducts(Boolean orderByPrice, String orderDirection, Integer offset){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
-                "SELECT product_id as _id, image, title, price, description, stock, seller_id, status " +
+                "SELECT " +
+                        Products.PRODUCT_ID + " as _id," +
+                        Products.PRODUCT_IMAGE + ", " +
+                        Products.PRODUCT_TITLE + ", " +
+                        Products.PRODUCT_PRICE + ", " +
+                        Products.PRODUCT_DESCRIPTION + ", " +
+                        Products.PRODUCT_STOCK + ", " +
+                        Products.PRODUCT_SELLER + ", " +
+                        Products.PRODUCT_STATUS + " " +
                         "FROM " + Products.TABLE_PRODUCT_NAME + (orderByPrice ?
                             " ORDER BY " + Products.PRODUCT_PRICE + " " + (orderDirection.isEmpty() ? "ASC" : orderDirection) :
                             "") +
@@ -377,8 +385,17 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getProductsByTitle(Boolean orderByPrice, String orderDirection, Integer offset, String title){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
-                "SELECT product_id as _id, image, title, price, description, stock, seller_id, status FROM " + Products.TABLE_PRODUCT_NAME +
-                        " WHERE title LIKE '%" + title + "%'" +
+                "SELECT " +
+                        Products.PRODUCT_ID + " as _id," +
+                        Products.PRODUCT_IMAGE + ", " +
+                        Products.PRODUCT_TITLE + ", " +
+                        Products.PRODUCT_PRICE + ", " +
+                        Products.PRODUCT_DESCRIPTION + ", " +
+                        Products.PRODUCT_STOCK + ", " +
+                        Products.PRODUCT_SELLER + ", " +
+                        Products.PRODUCT_STATUS + " " +
+                        " FROM " + Products.TABLE_PRODUCT_NAME +
+                        " WHERE " + Products.PRODUCT_TITLE + " LIKE '%" + title + "%'" +
                         (orderByPrice ?
                         " ORDER BY " + Products.PRODUCT_PRICE + " " + (orderDirection.isEmpty() ? "ASC" : orderDirection) :
                         "") + " LIMIT 10 OFFSET " + offset, null);
@@ -394,8 +411,17 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Product product = null;
         Cursor res = db.rawQuery(
-                "SELECT product_id as _id, image, title, price, description, stock, seller_id, status FROM " + Products.TABLE_PRODUCT_NAME +
-                        " WHERE product_id = ?", new String[]{ String.valueOf(productId) });
+                "SELECT " +
+                        Products.PRODUCT_ID + " as _id," +
+                        Products.PRODUCT_IMAGE + ", " +
+                        Products.PRODUCT_TITLE + ", " +
+                        Products.PRODUCT_PRICE + ", " +
+                        Products.PRODUCT_DESCRIPTION + ", " +
+                        Products.PRODUCT_STOCK + ", " +
+                        Products.PRODUCT_SELLER + ", " +
+                        Products.PRODUCT_STATUS + " " +
+                        " FROM " + Products.TABLE_PRODUCT_NAME +
+                        " WHERE " + Products.PRODUCT_ID + " = ?", new String[]{ String.valueOf(productId) });
 
 
         try {
