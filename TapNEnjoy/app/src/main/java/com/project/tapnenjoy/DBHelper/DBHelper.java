@@ -339,8 +339,6 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(Products.PRODUCT_SELLER, product.sellerId);
         contentValues.put(Products.PRODUCT_STOCK, product.stock);
         contentValues.put(Products.PRODUCT_STATUS, (product.status ? 1 : 0));
-        contentValues.put(Users.USER_UPDATION,
-                new SimpleDateFormat("yyyyMMddHHmmssSS").format(new Date()));
 
         db.update(Products.TABLE_PRODUCT_NAME,
                 contentValues,

@@ -6,8 +6,8 @@ public class Product {
     public Double price;
     public String description;
     public byte[] image;
-    public float stock;
-    public float sellerId;
+    public Integer stock;
+    public Integer sellerId;
     public Boolean status;
     public Double distance;
 
@@ -85,7 +85,7 @@ public class Product {
         return sellerId;
     }
 
-    public void setSellerId(float sellerId) {
+    public void setSellerId(Integer sellerId) {
         this.sellerId = sellerId;
     }
 
@@ -93,7 +93,7 @@ public class Product {
         return stock;
     }
 
-    public void setStock(float stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 }

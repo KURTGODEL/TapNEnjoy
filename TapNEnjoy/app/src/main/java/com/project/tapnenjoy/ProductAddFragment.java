@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.content.Intent;
 import android.net.Uri;
@@ -39,15 +40,15 @@ import com.project.tapnenjoy.DBHelper.DBHelper;
 public class ProductAddFragment extends AuthenticatedFragment {
 
     private String prodDescription, prodName, strPrice, strStock;
-    private Double prodPrice;
-    private Integer editId = 0, deleteId = 0, prodStock = 0;
+    private Double prodPrice = 0.0, prodStock = 0.0;
+    private Integer editId = 0, deleteId = 0;
     private byte[] prodImage;
     private Button addNewProductButton, updateProductButton, queryProductButton, deleteProductButton;
     private ImageView inputProductImage;
     private TextInputLayout inputProductName, inputProductDescription, inputProductPrice;
     private EditText inputProductStock;
     private static final int GalleryPick = 1;
-    private Uri ImageUri;
+    private Uri imageUri;
     ProgressDialog progressDialog;
 
     MainActivity mainActivity;
@@ -237,8 +238,8 @@ public class ProductAddFragment extends AuthenticatedFragment {
 
         if (requestCode == GalleryPick && resultCode == mainActivity.RESULT_OK && data != null)
         {
-            ImageUri = data.getData();
-            inputProductImage.setImageURI(ImageUri);
+            imageUri = data.getData();
+            inputProductImage.setImageURI(imageUri);
         }
     }
 
@@ -261,22 +262,30 @@ public class ProductAddFragment extends AuthenticatedFragment {
         AlertDialog alert = builder.create();
         alert.setTitle(R.string.lblAlertTitle);
 
-        if (ImageUri == null)
+        if (imageUri == null && editId == 0)
         {
             alert.setMessage("Product image is mandatory...");
             alert.show();
         }else{
-            try {
-                Context context = mainActivity.getApplicationContext();
-                InputStream iStream = context.getContentResolver().openInputStream(ImageUri);
-                prodImage = getBytes(iStream);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(editId != 0){
+                Bitmap bitmap = ((BitmapDrawable) inputProductImage.getDrawable()).getBitmap();
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                prodImage = byteArrayOutputStream.toByteArray();
+            }else{
+                try {
+                    Context context = mainActivity.getApplicationContext();
+                    InputStream iStream = context.getContentResolver().openInputStream(imageUri);
+                    prodImage = getBytes(iStream);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             alert.hide();
+            alert.dismiss();
         }
 
         if (TextUtils.isEmpty(prodDescription))
@@ -297,7 +306,7 @@ public class ProductAddFragment extends AuthenticatedFragment {
         }
 
         if (!TextUtils.isEmpty(strStock)) {
-            prodStock = Integer.valueOf(strStock);
+            prodStock = Double.valueOf(strStock);
         }
 
         if (TextUtils.isEmpty(prodName))
@@ -328,7 +337,7 @@ public class ProductAddFragment extends AuthenticatedFragment {
                             prodPrice,
                             prodDescription,
                             prodImage,
-                            prodStock,
+                            (int)Math.round(prodStock),
                             mainActivity.getAuthenticatedUserId(),
                             true));
 
@@ -349,7 +358,7 @@ public class ProductAddFragment extends AuthenticatedFragment {
                             prodPrice,
                             prodDescription,
                             prodImage,
-                            prodStock,
+                            (int)Math.round(prodStock),
                             mainActivity.getAuthenticatedUserId(),
                             true));
 
