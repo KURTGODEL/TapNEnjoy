@@ -18,8 +18,8 @@ public class GeoLocationHelper {
 
         try {
             // May throw an IOException
-            address = coder.getFromLocationName(strAddress, 5);
-            if (address == null) {
+            address = coder.getFromLocationName(strAddress, 1);
+            if (address == null || (address != null && (address.isEmpty() || address.size() == 0))) {
                 return null;
             }
 
@@ -27,6 +27,8 @@ public class GeoLocationHelper {
             position = new Pair((float)location.getLatitude(), (float)location.getLongitude());
 
         } catch (IOException ex){
+            ex.printStackTrace();
+        }catch (IndexOutOfBoundsException ex){
             ex.printStackTrace();
         }
 
