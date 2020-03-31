@@ -3,6 +3,7 @@ package com.project.tapnenjoy.Models;
 public class UserOrdersAdapterToList {
     public Integer userOrderId;
     public Integer userId;
+    public Integer sellerId;
     public Integer productId;
     public String productTitle;
     public Double productPrice;
@@ -10,12 +11,14 @@ public class UserOrdersAdapterToList {
 
     public UserOrdersAdapterToList(Integer Id,
                                    Integer userId,
+                                   Integer sellerId,
                                    Integer productId,
                                    String productTitle,
                                    Double productPrice,
                                    byte[] image){
         this.userOrderId = Id;
         this.userId = userId;
+        this.sellerId = sellerId;
         this.productId = productId;
         this.productTitle = productTitle;
         this.productPrice = productPrice;

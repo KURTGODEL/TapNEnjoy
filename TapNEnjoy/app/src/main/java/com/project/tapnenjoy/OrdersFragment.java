@@ -37,6 +37,7 @@ public class OrdersFragment extends Fragment{
             userOrdersAdapterToList.add(new UserOrdersAdapterToList(
                     cursor.getInt(cursor.getColumnIndex("user_orders_id")),
                     cursor.getInt(cursor.getColumnIndex("user_id")),
+                    cursor.getInt(cursor.getColumnIndex("seller_id")),
                     cursor.getInt(cursor.getColumnIndex("product_id")),
                     cursor.getString(cursor.getColumnIndex("title")),
                     cursor.getDouble(cursor.getColumnIndex("price")),
