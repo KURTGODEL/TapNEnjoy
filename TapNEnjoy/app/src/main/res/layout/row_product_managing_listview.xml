@@ -12,27 +12,27 @@
     <GridLayout
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:maxWidth="75dp"
         android:layout_row="0"
         android:layout_column="0"
-        android:layout_gravity="right"
+        android:layout_gravity="left"
         android:background="@drawable/image_border"
         android:columnCount="1"
+        android:maxWidth="75dp"
         android:orientation="vertical"
         android:rowCount="1">
 
-    <ImageView
-        android:id="@+id/imageProduct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_row="0"
-        android:layout_column="0"
-        android:layout_gravity="center|center_horizontal"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/contentImageDesc"
-        android:scaleType="fitXY"
-        android:padding="4dp"
-        android:src="@drawable/noimage" />
+        <ImageView
+            android:id="@+id/imageProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_gravity="center|center_horizontal"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/contentImageDesc"
+            android:padding="4dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/noimage" />
 
     </GridLayout>
 
@@ -41,10 +41,12 @@
         android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_column="1"
+        android:layout_columnSpan="2"
         android:columnCount="2"
         android:minHeight="75dp"
         android:orientation="vertical"
-        android:rowCount="2">
+        android:rowCount="2"
+        android:layout_gravity="left">
 
         <TextView
             android:id="@+id/txtProduct"
@@ -94,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="0"
-            android:layout_gravity="center|center_horizontal"
+            android:layout_gravity="bottom|center|center_horizontal"
             android:layout_marginEnd="6dp"
             android:backgroundTint="@color/colorSuccess"
             android:drawableLeft="@drawable/ic_edit_white_24dp"
@@ -111,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_gravity="center|center_horizontal"
+            android:layout_gravity="bottom|center|center_horizontal"
             android:backgroundTint="@color/colorDanger"
             android:drawableLeft="@drawable/ic_delete_white_24dp"
             android:gravity="center|center_horizontal"

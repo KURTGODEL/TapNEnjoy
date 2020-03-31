@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.project.tapnenjoy.DBHelper.DBHelper;
+import com.project.tapnenjoy.MainActivity;
 import com.project.tapnenjoy.R;
 import com.project.tapnenjoy.WatchListAdapter;
 
@@ -21,6 +22,8 @@ import java.util.ArrayList;
  */
 public class OffersFragment extends Fragment {
 
+    MainActivity mainActivity;
+    Integer userId;
 
     public OffersFragment() {
         // Required empty public constructor
@@ -28,13 +31,17 @@ public class OffersFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        mainActivity = ((MainActivity)getActivity());
+        userId = mainActivity.getAuthenticatedUserId();
+
         View view = inflater.inflate(R.layout.fragment_offers, container, false);
 
         ListView myOrdersListView = view.findViewById(R.id.myOffersListView);
 
         DBHelper dbHelper = new DBHelper(getContext());
 
-        Cursor cursor = dbHelper.getUserOffers(1, 0);
+        Cursor cursor = dbHelper.getUserOffers(userId, 0);
 
         ArrayList<UserOffersAdapterToList> userOffersAdapterToListArray = new ArrayList<>();
 

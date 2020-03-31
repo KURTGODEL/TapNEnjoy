@@ -20,6 +20,9 @@ import java.util.ArrayList;
  */
 public class WatchListFragment extends Fragment {
 
+    MainActivity mainActivity;
+    Integer userId;
+
     public WatchListFragment() {
         // Required empty public constructor
     }
@@ -27,13 +30,16 @@ public class WatchListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        mainActivity = ((MainActivity)getActivity());
+        userId = mainActivity.getAuthenticatedUserId();
+
         View view = inflater.inflate(R.layout.fragment_watch_list, container, false);
 
         ListView myOrdersListView = view.findViewById(R.id.watchListListView);
 
         DBHelper dbHelper = new DBHelper(getContext());
 
-        Cursor cursor = dbHelper.getUserWatchs(2, 0);
+        Cursor cursor = dbHelper.getUserWatchs(userId, 0);
 
         ArrayList<UserWatchsAdapterToList> userWatchsAdapterToListArrayList = new ArrayList<>();
 
