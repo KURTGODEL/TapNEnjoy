@@ -16,6 +16,9 @@ import java.util.ArrayList;
 
 public class OrdersFragment extends Fragment{
 
+    MainActivity mainActivity;
+    Integer userId;
+
     public OrdersFragment() {
         // Required empty public constructor
     }
@@ -23,13 +26,16 @@ public class OrdersFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        mainActivity = ((MainActivity)getActivity());
+        userId = mainActivity.getAuthenticatedUserId();
+
         View view = inflater.inflate(R.layout.fragment_my_orders, container, false);
 
         ListView myOrdersListView = view.findViewById(R.id.myOrdersListView);
 
         DBHelper dbHelper = new DBHelper(getContext());
 
-        Cursor cursor = dbHelper.getUserOrders(1, 0);
+        Cursor cursor = dbHelper.getUserOrders(userId, 0);
 
         ArrayList<UserOrdersAdapterToList> userOrdersAdapterToList = new ArrayList<>();
 
@@ -37,6 +43,7 @@ public class OrdersFragment extends Fragment{
             userOrdersAdapterToList.add(new UserOrdersAdapterToList(
                     cursor.getInt(cursor.getColumnIndex("user_orders_id")),
                     cursor.getInt(cursor.getColumnIndex("user_id")),
+                    cursor.getInt(cursor.getColumnIndex("seller_id")),
                     cursor.getInt(cursor.getColumnIndex("product_id")),
                     cursor.getString(cursor.getColumnIndex("title")),
                     cursor.getDouble(cursor.getColumnIndex("price")),

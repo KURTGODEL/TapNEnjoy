@@ -10,7 +10,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.textfield.TextInputLayout;
 import com.project.tapnenjoy.DBHelper.DBHelper;
+import com.project.tapnenjoy.Models.OffersFragment;
 import com.project.tapnenjoy.Models.Product;
+import com.project.tapnenjoy.Models.UserOffer;
 import com.project.tapnenjoy.Models.UserOrder;
 import com.project.tapnenjoy.Models.UserWatch;
 
@@ -101,20 +103,30 @@ public class MainAuthenticatedFragment extends AuthenticatedFragment {
         btnMyOffers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserWatch userWatch = new UserWatch(null, 2, 5,true);
-                DBHelper dbHelper = new DBHelper(view.getContext());
-                dbHelper.insertUserWatchData(userWatch);
+                mainActivity.displayFragment(OffersFragment.class);
             }
         });
 
         btnStartShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NewOrder();
+                mainActivity.displayFragment(ProductSearchResultFragment.class);
             }
         });
 
         return view;
+    }
+
+    private void NewWatchList(){
+        UserWatch userWatch = new UserWatch(null, 2, 5,true);
+        DBHelper dbHelper = new DBHelper(getContext());
+        dbHelper.insertUserWatchData(userWatch);
+    }
+
+    private void NewOffer(){
+        UserOffer userOffer = new UserOffer(null,1,4, 5, 20, 22, true);
+        DBHelper dbHelper = new DBHelper(getContext());
+        dbHelper.insertUserOfferData(userOffer);
     }
 
     private void NewOrder(){

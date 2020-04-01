@@ -25,6 +25,7 @@ import java.util.ArrayList;
 public class ProductSearchResultFragment extends Fragment {
 
     final static String key = "keyWord";
+    String keyWord = "";
 
     public ProductSearchResultFragment() {
         // Required empty public constructor
@@ -37,7 +38,9 @@ public class ProductSearchResultFragment extends Fragment {
 
         Bundle args = getArguments();
 
-        String keyWord =  args.getString(key);
+        if (args != null) {
+            keyWord = args.getString(key);
+        }
 
         ListView myOrdersListView = view.findViewById(R.id.productSearchListView);
 

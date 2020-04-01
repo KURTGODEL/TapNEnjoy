@@ -1,4 +1,4 @@
-package com.project.tapnenjoy;
+package com.project.tapnenjoy.Models;
 
 
 import android.database.Cursor;
@@ -11,19 +11,21 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.project.tapnenjoy.DBHelper.DBHelper;
-import com.project.tapnenjoy.Models.UserWatchsAdapterToList;
-import java.util.ArrayList;
+import com.project.tapnenjoy.MainActivity;
+import com.project.tapnenjoy.R;
+import com.project.tapnenjoy.WatchListAdapter;
 
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WatchListFragment extends Fragment {
+public class OffersFragment extends Fragment {
 
     MainActivity mainActivity;
     Integer userId;
 
-    public WatchListFragment() {
+    public OffersFragment() {
         // Required empty public constructor
     }
 
@@ -33,20 +35,21 @@ public class WatchListFragment extends Fragment {
         mainActivity = ((MainActivity)getActivity());
         userId = mainActivity.getAuthenticatedUserId();
 
-        View view = inflater.inflate(R.layout.fragment_watch_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_offers, container, false);
 
-        ListView myOrdersListView = view.findViewById(R.id.watchListListView);
+        ListView myOrdersListView = view.findViewById(R.id.myOffersListView);
 
         DBHelper dbHelper = new DBHelper(getContext());
 
-        Cursor cursor = dbHelper.getUserWatchs(userId, 0);
+        Cursor cursor = dbHelper.getUserOffers(userId, 0);
 
-        ArrayList<UserWatchsAdapterToList> userWatchsAdapterToListArrayList = new ArrayList<>();
+        ArrayList<UserOffersAdapterToList> userOffersAdapterToListArray = new ArrayList<>();
 
         while(cursor.moveToNext()) {
-            userWatchsAdapterToListArrayList.add(new UserWatchsAdapterToList(
-                    cursor.getInt(cursor.getColumnIndex("user_watchs_id")),
+            userOffersAdapterToListArray.add(new UserOffersAdapterToList(
+                    cursor.getInt(cursor.getColumnIndex("user_offers_id")),
                     cursor.getInt(cursor.getColumnIndex("user_id")),
+                    cursor.getInt(cursor.getColumnIndex("seller_id")),
                     cursor.getInt(cursor.getColumnIndex("product_id")),
                     cursor.getString(cursor.getColumnIndex("title")),
                     cursor.getDouble(cursor.getColumnIndex("price")),
@@ -55,7 +58,7 @@ public class WatchListFragment extends Fragment {
         }
         cursor.close();
 
-        WatchListAdapter adapter = new WatchListAdapter(view.getContext(), R.layout.row_products_listview, userWatchsAdapterToListArrayList);
+        OfferListAdapter adapter = new OfferListAdapter(view.getContext(), R.layout.row_products_listview, userOffersAdapterToListArray);
 
         myOrdersListView.setAdapter(adapter);
 

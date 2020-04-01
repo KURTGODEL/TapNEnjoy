@@ -612,6 +612,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         " O." + UserOrders.USER_ORDER_SELLER + ", " +
                         " P." + Products.PRODUCT_ID + ", " +
                         " P." + Products.PRODUCT_IMAGE + ", " +
+                        " P." + Products.PRODUCT_PRICE + ", " +
                         " P." + Products.PRODUCT_TITLE +
                     " FROM " + UserOrders.TABLE_USER_ORDER_NAME + " O, " + Products.TABLE_PRODUCT_NAME + " P " +
                     " WHERE O." + UserOrders.USER_ORDER_PRODUCT + " = P." + Products.PRODUCT_ID + " " +
@@ -746,6 +747,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     " P." + Products.PRODUCT_IMAGE + ", " +
                     " P." + Products.PRODUCT_TITLE + ", " +
                     " P." + Products.PRODUCT_PRICE + " , " +
+                      " P." + Products.PRODUCT_SELLER + " , " +
                     " P." + Products.PRODUCT_STOCK +
                     " FROM " + UserOffers.TABLE_USER_OFFER_NAME + " O, " + Products.TABLE_PRODUCT_NAME + " P " +
                     " WHERE O." + UserOffers.USER_OFFER_PRODUCT + " = P." + Products.PRODUCT_ID +
