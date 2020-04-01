@@ -62,7 +62,7 @@ public class ConfirmFinalFragment extends Fragment {
         }
         //totalAmount = this.getArguments().getString("totalAmount");
         */
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("OrderProduct",
+        final SharedPreferences sharedPreferences = getActivity().getSharedPreferences("OrderProduct",
                 Context.MODE_PRIVATE);
         String totalAmount =sharedPreferences.getString("totalAmount", "");
         Toast.makeText(this.getActivity(), "Total Price =  $ " + totalAmount, Toast.LENGTH_SHORT).show();
@@ -86,7 +86,7 @@ public class ConfirmFinalFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                db.deleteUserOrderData(getArguments().getInt("userOrderID"));
+                db.deleteUserOrderData(sharedPreferences.getInt("userOrderID",0));
                 mainActivity.displayFragment( ProductDetailsFragment.class);
             }
         });

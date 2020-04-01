@@ -22,7 +22,7 @@ import com.project.tapnenjoy.DBHelper.DBHelper;
 import com.project.tapnenjoy.Models.Product;
 
 public class MakeOfferFragment extends Fragment {
-    Button sendOfferButton;
+    Button sendOfferButton,cancelButton;
     ImageView productImage;
     EditText offerPrice, productNum, offerReason;
     TextView productName;
@@ -58,6 +58,7 @@ public class MakeOfferFragment extends Fragment {
         db = new DBHelper(getContext());
 
         sendOfferButton = view.findViewById(R.id.send_offer_btn);
+        cancelButton = view.findViewById(R.id.cancel_btn);
         offerReason = view.findViewById(R.id.txt_offerreason);
         productImage = view.findViewById(R.id.productimage);
         productName = view.findViewById(R.id.offer_product_name);
@@ -83,7 +84,12 @@ public class MakeOfferFragment extends Fragment {
                 mainActivity.displayFragment( ProductDetailsFragment.class);
             }
         });
-
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.displayFragment( HomeFragment.class);
+            }
+        });
 
         return view;
     }
