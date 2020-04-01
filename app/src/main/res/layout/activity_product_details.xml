@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/layout"
+    android:backgroundTint="@color/colorPrimaryLight"
+    android:backgroundTintMode="multiply"
+    android:isScrollContainer="false"
+    tools:context=".ProductDetailsFragment">
+
+    <GridLayout
+        android:id="@+id/grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="1"
+        android:rowCount="9">
+
+        <ImageView
+            android:id="@+id/product_image_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_gravity="center|center_horizontal"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/lblProductImageContent"
+            android:cropToPadding="false"
+            android:maxHeight="130dp"
+            android:minHeight="130dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/noimage"/>
+
+        <TextView
+            android:id="@+id/product_name_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/product_description_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/product_price_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center|center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_sub_number"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_horizontal"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center|center_horizontal"
+                android:text="@string/lblSubNumber"
+                android:textColor="@android:color/white"
+                android:layout_weight="1"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/txt_number"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_horizontal"
+                android:gravity="center|center_horizontal"
+                android:hint="@string/hintProductNumber"
+                android:inputType="number"
+                android:text="@string/lblZero"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_add_number"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_horizontal"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center|center_horizontal"
+                android:text="@string/lblAddNumber"
+                android:textColor="@android:color/white"
+                android:layout_weight="1"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/pd_add_to_cart_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_row="5"
+            android:layout_column="0"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/lblBtnAddCart"
+            android:textColor="@android:color/white"
+            android:layout_weight="1"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/pd_buy_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_row="6"
+            android:layout_column="0"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/lblBtnBuy"
+            android:textColor="@android:color/white"
+            android:layout_weight="1"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/pd_offer_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_row="7"
+            android:layout_column="0"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/lblBtnOffer"
+            android:textColor="@android:color/white"
+            android:layout_weight="1"
+            android:textSize="20sp" />
+    </GridLayout>
+</ScrollView>

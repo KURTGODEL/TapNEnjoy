@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/layout"
+    android:backgroundTint="@color/colorPrimaryLight"
+    android:backgroundTintMode="multiply"
+    android:isScrollContainer="false"
+    tools:context=".MakeOfferFragment">
+
+    <GridLayout
+        android:id="@+id/grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="1"
+        android:rowCount="8">
+
+
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:layout_width="268dp"
+        android:layout_height="224dp"
+        android:layout_gravity="center|center_horizontal"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:layout_marginTop="50dp"
+        android:adjustViewBounds="true"
+        android:cropToPadding="false"
+        android:maxHeight="130dp"
+        android:minHeight="130dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/noimage"
+        app:srcCompat="@drawable/logo"/>
+
+        <TextView
+            android:id="@+id/textContact"
+            android:layout_width="279dp"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_margin="10dp"
+            android:layout_marginTop="50dp"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="Contact us"
+            android:textAlignment="gravity"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHighlight="@color/colorPrimaryDark"
+            android:textFontWeight="bold"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="186dp"
+            tools:layout_editor_absoluteY="337dp" />
+
+
+
+        <TextView
+        android:id="@+id/tv_contactPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_horizontal"
+        android:layout_margin="10dp"
+        android:text="Phone: (1)460-464-5856"
+
+        android:layout_row="2"
+        android:layout_column="0"
+        tools:layout_editor_absoluteX="126dp"
+        tools:layout_editor_absoluteY="387dp" />
+
+        <TextView
+            android:id="@+id/tv_contactEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="10dp"
+            android:text="Email: info@TapNEnjoy"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_row="3"
+            android:layout_column="0"
+            tools:layout_editor_absoluteX="130dp"
+            tools:layout_editor_absoluteY="443dp" />
+
+        <TextView
+            android:id="@+id/tv_About"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginTop="50dp"
+            android:fontFamily="sans-serif-black"
+            android:includeFontPadding="false"
+            android:text="About"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/tv_TermsOfService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Terms Of Service"
+            android:layout_margin="8dp"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_row="5"
+            android:layout_column="0"
+             />
+        <TextView
+            android:id="@+id/tv_PrivacyPolice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Privacy Police"
+            android:layout_margin="8dp"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_row="6"
+            android:layout_column="0"
+            />
+        <TextView
+            android:id="@+id/tv_Points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Rewards Points"
+            android:layout_margin="8dp"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_row="7"
+            android:layout_column="0"
+            />
+
+        <Button
+            android:id="@+id/logoutBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="8"
+            android:layout_column="0"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_margin="10dp"
+            android:text="Log Out"
+            android:gravity="center"
+            android:textAlignment="center" />
+
+
+
+    </GridLayout>
+</ScrollView>
