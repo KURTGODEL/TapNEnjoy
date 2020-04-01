@@ -2,7 +2,9 @@ package com.project.tapnenjoy;
 
 
 import android.database.Cursor;
+import android.database.CursorWindow;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import com.project.tapnenjoy.DBHelper.Constants.Products;
 import com.project.tapnenjoy.DBHelper.DBHelper;
 import com.project.tapnenjoy.Models.ProductManagingAdapterToList;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 
@@ -54,6 +57,14 @@ public class ProductManagingListFragment extends Fragment {
         DBHelper dbHelper = new DBHelper(getContext());
 
         Cursor cursor = dbHelper.getProducts(false, "", 0);
+
+        try {
+            Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
+            field.setAccessible(true);
+            field.set(null, 4 * 1024 * 1024); //the 4MB is the new size
+        } catch (Exception e) {
+            Log.e("SYSERROR", e.getMessage());
+        }
 
         ArrayList<ProductManagingAdapterToList> productsAdapterToListArrayList = new ArrayList<>();
 

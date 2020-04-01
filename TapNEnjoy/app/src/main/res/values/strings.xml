@@ -48,4 +48,8 @@
     <string name="lblBtnMyOffers">MY OFFERS</string>
     <string name="lblBtnStartShopping">START SHOPPING</string>
     <string name="lblInStock">In stock:</string>
+    <string name="hintProductName">Product Name</string>
+    <string name="hintProductDescription">Product Description</string>
+    <string name="hintProductPrice">Product Price</string>
+    <string name="hintProductStock">Product Stock</string>
 </resources>

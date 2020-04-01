@@ -187,7 +187,9 @@ public class ProductAddFragment extends AuthenticatedFragment {
                                 Toast.makeText(getContext(), "No products deleted", Toast.LENGTH_LONG);
                             }
 
-                            progressDialog.dismiss();
+                            if(progressDialog != null){
+                                progressDialog.dismiss();
+                            }
 
                             mainActivity.displayFragment(ProductManagingListFragment.class);
                         }

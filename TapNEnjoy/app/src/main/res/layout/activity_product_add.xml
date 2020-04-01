@@ -21,6 +21,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="40dp"
+            android:layout_marginBottom="60dp"
             android:columnCount="1"
             android:rowCount="10">
 
@@ -45,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_row="1"
                 android:layout_column="0"
-                android:hint="Product Name..."
+                android:hint="@string/hintProductName"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -61,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_row="2"
                 android:layout_column="0"
-                android:hint="Product Description..."
+                android:hint="@string/hintProductDescription"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -77,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_row="3"
                 android:layout_column="0"
-                android:hint="Product Price..."
+                android:hint="@string/hintProductPrice"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -103,7 +104,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="@string/lblStock"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <Button
@@ -125,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|center_horizontal"
                     android:gravity="center|center_horizontal"
-                    android:hint="Product Stock..."
+                    android:hint="@string/hintProductStock"
                     android:inputType="number"
                     android:text="@string/lblZero"
                     android:textColor="@android:color/black"
@@ -157,7 +158,6 @@
                 android:layout_gravity="center|center_horizontal"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:layout_weight="1"
                 android:backgroundTint="@color/colorSuccess"
                 android:drawableLeft="@drawable/ic_save_white_24dp"
                 android:gravity="center|center_horizontal"
@@ -174,7 +174,6 @@
                 android:layout_column="0"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:layout_weight="1"
                 android:backgroundTint="@color/colorSuccess"
                 android:drawableLeft="@drawable/ic_save_white_24dp"
                 android:text="@string/lblUpdateProduct"
@@ -190,7 +189,6 @@
                 android:layout_column="0"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:layout_weight="1"
                 android:text="Query Product"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
@@ -204,7 +202,7 @@
                 android:layout_column="0"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:layout_weight="1"
+                android:layout_marginBottom="60dp"
                 android:backgroundTint="@color/colorDanger"
                 android:drawableLeft="@drawable/ic_delete_white_24dp"
                 android:text="@string/lblDeleteProduct"

@@ -145,8 +145,8 @@ public class SignupFragment extends Fragment {
                                 username,
                                 password,
                                 address,
-                                latLng.first,
-                                latLng.second,
+                                (latLng != null ? latLng.first : 0),
+                                (latLng != null ? latLng.second : 0),
                                 isSeller,
                                 true);
                         user.setUserIsSeller(isSeller);
